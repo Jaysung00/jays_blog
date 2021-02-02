@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Analyzing Marketing Campaigns with pandas ① | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Analyzing Marketing Campaigns with pandas ①" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Analyzing Marketing Campaigns with pandas - ①Pandas まとめ, via Datacamp" />
+<meta property="og:description" content="Analyzing Marketing Campaigns with pandas - ①Pandas まとめ, via Datacamp" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/datacamp/2021/02/02/Marketing-1.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/datacamp/2021/02/02/Marketing-1.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-02T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/datacamp/2021/02/02/Marketing-1.html","@type":"BlogPosting","headline":"Analyzing Marketing Campaigns with pandas ①","dateModified":"2021-02-02T00:00:00-06:00","datePublished":"2021-02-02T00:00:00-06:00","author":{"@type":"Person","name":"Jay Sung"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/datacamp/2021/02/02/Marketing-1.html"},"description":"Analyzing Marketing Campaigns with pandas - ①Pandas まとめ, via Datacamp","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Analyzing Marketing Campaigns with pandas ①</h1><p class="page-description"><a href='https://learn.datacamp.com/courses/analyzing-marketing-campaigns-with-pandas'>Analyzing Marketing Campaigns with pandas - ①Pandas</a> まとめ, via Datacamp</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-02T00:00:00-06:00" itemprop="datePublished">
+        Feb 2, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#Datacamp">Datacamp</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#マーケティングチームでデータサイエンティストがやること">マーケティングチームでデータサイエンティストがやること </a></li>
+<li class="toc-entry toc-h2"><a href="#データを確認">データを確認 </a></li>
+<li class="toc-entry toc-h2"><a href="#列ごとにデータ型を更新する">列ごとにデータ型を更新する </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#データ型の変換">データ型の変換 </a></li>
+<li class="toc-entry toc-h3"><a href="#新しい列の追加">新しい列の追加 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#探索的データ解析（EDA）">探索的データ解析（EDA） </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-02-02-Marketing-1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="マーケティングチームでデータサイエンティストがやること">
+<a class="anchor" href="#%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%81%E3%83%BC%E3%83%A0%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%82%B5%E3%82%A4%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%82%B9%E3%83%88%E3%81%8C%E3%82%84%E3%82%8B%E3%81%93%E3%81%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>マーケティングチームでデータサイエンティストがやること<a class="anchor-link" href="#%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%81%E3%83%BC%E3%83%A0%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E3%82%B5%E3%82%A4%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%82%B9%E3%83%88%E3%81%8C%E3%82%84%E3%82%8B%E3%81%93%E3%81%A8"> </a>
+</h2>
+<ul>
+<li>マーケッティングキャンペーンの効果分析 &amp; ターゲッティング</li>
+<li>マーケッティングチャネルの転換率や収益を考慮し、妥当性を分析</li>
+<li>A/B テストを行う</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import data</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">marketing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'./dataset/marketing.csv'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="データを確認">
+<a class="anchor" href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E7%A2%BA%E8%AA%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>データを確認<a class="anchor-link" href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E7%A2%BA%E8%AA%8D"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">marketing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>date_served</th>
+      <th>marketing_channel</th>
+      <th>variant</th>
+      <th>converted</th>
+      <th>language_displayed</th>
+      <th>language_preferred</th>
+      <th>age_group</th>
+      <th>date_subscribed</th>
+      <th>date_canceled</th>
+      <th>subscribing_channel</th>
+      <th>is_retained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a100000029</td>
+      <td>1/1/18</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>0-18 years</td>
+      <td>1/1/18</td>
+      <td>NaN</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>a100000030</td>
+      <td>1/1/18</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>19-24 years</td>
+      <td>1/1/18</td>
+      <td>NaN</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>a100000031</td>
+      <td>1/1/18</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>24-30 years</td>
+      <td>1/1/18</td>
+      <td>NaN</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>a100000032</td>
+      <td>1/1/18</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>30-36 years</td>
+      <td>1/1/18</td>
+      <td>NaN</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>a100000033</td>
+      <td>1/1/18</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>36-45 years</td>
+      <td>1/1/18</td>
+      <td>NaN</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">marketing</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>date_served</th>
+      <th>marketing_channel</th>
+      <th>variant</th>
+      <th>converted</th>
+      <th>language_displayed</th>
+      <th>language_preferred</th>
+      <th>age_group</th>
+      <th>date_subscribed</th>
+      <th>date_canceled</th>
+      <th>subscribing_channel</th>
+      <th>is_retained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>10037</td>
+      <td>10021</td>
+      <td>10022</td>
+      <td>10037</td>
+      <td>10022</td>
+      <td>10037</td>
+      <td>10037</td>
+      <td>10037</td>
+      <td>1856</td>
+      <td>577</td>
+      <td>1856</td>
+      <td>1856</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>7309</td>
+      <td>31</td>
+      <td>5</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>7</td>
+      <td>31</td>
+      <td>115</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>a100000882</td>
+      <td>1/15/18</td>
+      <td>House Ads</td>
+      <td>control</td>
+      <td>False</td>
+      <td>English</td>
+      <td>English</td>
+      <td>19-24 years</td>
+      <td>1/16/18</td>
+      <td>4/2/18</td>
+      <td>Instagram</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>12</td>
+      <td>789</td>
+      <td>4733</td>
+      <td>5091</td>
+      <td>8946</td>
+      <td>9793</td>
+      <td>9275</td>
+      <td>1682</td>
+      <td>163</td>
+      <td>15</td>
+      <td>600</td>
+      <td>1279</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">marketing</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 10037 entries, 0 to 10036
+Data columns (total 12 columns):
+ #   Column               Non-Null Count  Dtype 
+---  ------               --------------  ----- 
+ 0   user_id              10037 non-null  object
+ 1   date_served          10021 non-null  object
+ 2   marketing_channel    10022 non-null  object
+ 3   variant              10037 non-null  object
+ 4   converted            10022 non-null  object
+ 5   language_displayed   10037 non-null  object
+ 6   language_preferred   10037 non-null  object
+ 7   age_group            10037 non-null  object
+ 8   date_subscribed      1856 non-null   object
+ 9   date_canceled        577 non-null    object
+ 10  subscribing_channel  1856 non-null   object
+ 11  is_retained          1856 non-null   object
+dtypes: object(12)
+memory usage: 941.1+ KB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="列ごとにデータ型を更新する">
+<a class="anchor" href="#%E5%88%97%E3%81%94%E3%81%A8%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%99%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>列ごとにデータ型を更新する<a class="anchor-link" href="#%E5%88%97%E3%81%94%E3%81%A8%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B%E3%82%92%E6%9B%B4%E6%96%B0%E3%81%99%E3%82%8B"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="データ型の変換">
+<a class="anchor" href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B%E3%81%AE%E5%A4%89%E6%8F%9B" aria-hidden="true"><span class="octicon octicon-link"></span></a>データ型の変換<a class="anchor-link" href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B%E3%81%AE%E5%A4%89%E6%8F%9B"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Check the data type</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="s1">'is_retained'</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>object
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Convert is_retained to a boolean</span>
+<span class="n">marketing</span><span class="p">[</span><span class="s1">'is_retained'</span><span class="p">]</span> <span class="o">=</span> <span class="n">marketing</span><span class="p">[</span><span class="s1">'is_retained'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'bool'</span><span class="p">)</span>
+
+<span class="c1"># Check the data type of is_retained, again</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="s1">'is_retained'</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>bool
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="新しい列の追加">
+<a class="anchor" href="#%E6%96%B0%E3%81%97%E3%81%84%E5%88%97%E3%81%AE%E8%BF%BD%E5%8A%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>新しい列の追加<a class="anchor-link" href="#%E6%96%B0%E3%81%97%E3%81%84%E5%88%97%E3%81%AE%E8%BF%BD%E5%8A%A0"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Mapping for channels</span>
+<span class="n">channel_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"House Ads"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"Instagram"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> 
+                <span class="s2">"Facebook"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Email"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">"Push"</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+
+<span class="c1"># チャネルをコードにMappingする</span>
+<span class="n">marketing</span><span class="p">[</span><span class="s1">'channel_code'</span><span class="p">]</span> <span class="o">=</span> <span class="n">marketing</span><span class="p">[</span><span class="s1">'subscribing_channel'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">channel_dict</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 結果</span>
+<span class="n">marketing</span><span class="p">[[</span><span class="s1">'subscribing_channel'</span><span class="p">,</span> <span class="s1">'channel_code'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>subscribing_channel</th>
+      <th>channel_code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>House Ads</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>House Ads</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>House Ads</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>House Ads</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>House Ads</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10032</th>
+      <td>Email</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>10033</th>
+      <td>Email</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>10034</th>
+      <td>Email</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>10035</th>
+      <td>Email</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>10036</th>
+      <td>Email</td>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10037 rows × 2 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># 列同士の一致有無を表す列を追加</span>
+<span class="n">marketing</span><span class="p">[</span><span class="s1">'is_correct_lang'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">marketing</span><span class="p">[</span><span class="s1">'language_preferred'</span><span class="p">]</span> <span class="o">==</span> <span class="n">marketing</span><span class="p">[</span><span class="s1">'language_displayed'</span><span class="p">],</span> 
+    <span class="s1">'Yes'</span><span class="p">,</span> 
+    <span class="s1">'No'</span>
+<span class="p">)</span>
+
+<span class="c1"># 結果</span>
+<span class="n">marketing</span><span class="p">[[</span><span class="s1">'language_preferred'</span><span class="p">,</span> <span class="s1">'language_displayed'</span><span class="p">,</span> <span class="s1">'is_correct_lang'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>language_preferred</th>
+      <th>language_displayed</th>
+      <th>is_correct_lang</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>English</td>
+      <td>English</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>English</td>
+      <td>English</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>English</td>
+      <td>English</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>English</td>
+      <td>English</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>English</td>
+      <td>English</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10032</th>
+      <td>German</td>
+      <td>German</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>10033</th>
+      <td>German</td>
+      <td>German</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>10034</th>
+      <td>German</td>
+      <td>German</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>10035</th>
+      <td>German</td>
+      <td>German</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>10036</th>
+      <td>German</td>
+      <td>German</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+<p>10037 rows × 3 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># インポートの時にdatatime型にすることも可能</span>
+<span class="c1"># marketing = pd.read_csv('./dataset/marketing.csv', </span>
+<span class="c1">#                    parse_dates = ['date_served', 'date_subscribed', 'date_canceled'])</span>
+
+<span class="c1"># 曜日の列を数字で表した列追加</span>
+<span class="c1"># 月曜日:0, ... ,日曜日:6</span>
+<span class="n">marketing_with_date</span><span class="p">[</span><span class="s1">'DoW'</span><span class="p">]</span> <span class="o">=</span> <span class="n">marketing_with_date</span><span class="p">[</span><span class="s1">'date_subscribed'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
+
+<span class="c1">#結果</span>
+<span class="n">marketing_with_date</span><span class="p">[[</span><span class="s1">'date_subscribed'</span><span class="p">,</span> <span class="s1">'DoW'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date_subscribed</th>
+      <th>DoW</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-01-01</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-01-01</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-01-01</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-01-01</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-01-01</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10032</th>
+      <td>2018-01-17</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>10033</th>
+      <td>2018-01-17</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>10034</th>
+      <td>2018-01-17</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>10035</th>
+      <td>2018-01-17</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>10036</th>
+      <td>2018-01-17</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>10037 rows × 2 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="探索的データ解析（EDA）">
+<a class="anchor" href="#%E6%8E%A2%E7%B4%A2%E7%9A%84%E3%83%87%E3%83%BC%E3%82%BF%E8%A7%A3%E6%9E%90%EF%BC%88EDA%EF%BC%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>探索的データ解析（EDA）<a class="anchor-link" href="#%E6%8E%A2%E7%B4%A2%E7%9A%84%E3%83%87%E3%83%BC%E3%82%BF%E8%A7%A3%E6%9E%90%EF%BC%88EDA%EF%BC%89"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># date_served列をグループ化し、項目ごとにユニークなIDを数える</span>
+<span class="n">daily_users</span> <span class="o">=</span> <span class="n">marketing</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'date_served'</span><span class="p">])[</span><span class="s1">'user_id'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+
+<span class="c1"># print head</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">daily_users</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>date_served
+1/1/18     362
+1/10/18    337
+1/11/18    310
+1/12/18    301
+1/13/18    306
+Name: user_id, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Plot daily_subscribers</span>
+<span class="n">daily_users</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Include a title and y-axis label</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Daily users'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of users'</span><span class="p">)</span>
+
+<span class="c1"># Rotate the x-axis labels by 45 degrees</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Display the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p><strong>このシリーズの別のポストを見るには</strong></p>
+<p><a href="https://jaysung00.github.io/jays_blog/datacamp/2021/02/02/Marketing-2.html">[Next &gt;&gt;]</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/datacamp/2021/02/02/Marketing-1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
