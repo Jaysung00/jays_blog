@@ -4,8 +4,8 @@
         "post0": {
             "title": "파이썬 예제3 AxB",
             "content": ". 문제 두 정수 A와 B를 입력받은 다음, A×B를 출력하는 프로그램을 작성하시오. . 입력 첫째 줄에 A와 B가 주어진다. (0 &lt; A, B &lt; 10) . 출력 첫째 줄에 A×B를 출력한다. . 예제 입력 1 . 1 2 . 예제 출력 1 . 2 . 예제 입력 2 . 3 4 . 예제 출력 2 . 12 . a, b = map(int, input().split()) # 3 4 print(a*b) . 12 .",
-            "url": "https://jaysung00.github.io/jays_blog/boj%20problem/2021/10/16/BOJ10998_AxB.html",
-            "relUrl": "/boj%20problem/2021/10/16/BOJ10998_AxB.html",
+            "url": "https://jaysung00.github.io/jays_blog/python/2021/10/16/BOJ10998_AxB.html",
+            "relUrl": "/python/2021/10/16/BOJ10998_AxB.html",
             "date": " • Oct 16, 2021"
         }
         
@@ -15,8 +15,8 @@
         ,"post1": {
             "title": "파이썬 예제2 A+B",
             "content": ". 문제 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오. . 입력 첫째 줄에 A와 B가 주어진다. (0 &lt; A, B &lt; 10) . 출력 첫째 줄에 A+B를 출력한다. . 예제 입력 1 1 2 예제 출력 1 3 . # 첫번째 시도 a = input() # 1 b = input() # 2 print(a + b) # int 형으로 인식되지 않는다 . 12 . type(a) . str . # 개선1 a = int(input()) b = int(input()) print(a + b) # int형으로 인식되나, 한줄에 입력받지 못함 . ValueError Traceback (most recent call last) &lt;ipython-input-11-625471334fa1&gt; in &lt;module&gt; 1 # 개선1 -&gt; 2 a = int(input()) 3 b = int(input()) 4 5 print(a + b) # int형으로 인식되나, 한줄에 입력받지 못함 ValueError: invalid literal for int() with base 10: &#39;1 2&#39; . # 개선2 a, b = input().split() print(int(a) + int(b)) . 3 . split&#51012; &#51060;&#50857;&#54644;&#49436; &#54620; &#51460;&#47196; &#51077;&#47141;&#48155;&#45716; &#44163;&#51060; &#44032;&#45733;&#54664;&#45796;. . 한 번에 값을 여러 개 입력받으려면 input에서 split을 사용한 변수 여러 개에 저장해주면 된다. . 변수1, 변수2 = input().split() | 변수1, 변수2 = input().split(&#39;기준문자열&#39;) | 변수1, 변수2 = input(&#39;문자열&#39;).split() | 변수1, 변수2 = input(&#39;문자열&#39;).split(&#39;기준문자열&#39;) | . # 개선3 a, b = map(int, input().split()) print(a + b) . 3 . map&#51012; &#51060;&#50857;&#54644;&#49436; &#45908;&#50865; &#44036;&#45800;&#54616;&#44172; . map에 int와 input().split()을 넣으면 split의 결과를 모두 int로 변환해줌 . 변수1, 변수2 = map(int, input().split()) | 변수1, 변수2 = map(int, input().split(&#39;기준문자열&#39;)) | 변수1, 변수2 = map(int, input(&#39;문자열&#39;).split()) | 변수1, 변수2 = map(int, input(&#39;문자열&#39;).split(&#39;기준문자열&#39;)) | .",
-            "url": "https://jaysung00.github.io/jays_blog/boj%20problem/2021/10/16/BOJ1000_A+B.html",
-            "relUrl": "/boj%20problem/2021/10/16/BOJ1000_A+B.html",
+            "url": "https://jaysung00.github.io/jays_blog/python/2021/10/16/BOJ1000_A+B.html",
+            "relUrl": "/python/2021/10/16/BOJ1000_A+B.html",
             "date": " • Oct 16, 2021"
         }
         
