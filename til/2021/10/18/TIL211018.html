@@ -102,7 +102,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -131,7 +131,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr />
-<h2 id="&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)">&#51064;&#54532;&#47088; &#54028;&#51060;&#50028; &#51473;&#44553; (Inflearn Original)<a class="anchor-link" href="#&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)"> </a></h2><p>매직 메소드(1-1)</p>
+<h2 id="&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)">&#51064;&#54532;&#47088; &#54028;&#51060;&#50028; &#51473;&#44553; (Inflearn Original)<a class="anchor-link" href="#&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)"> </a></h2><p>매직 메소드(1-1, 2-1, 2-2)</p>
 <hr />
 <h4 id="&#54028;&#51060;&#50028;&#51032;-&#54645;&#49900;">&#54028;&#51060;&#50028;&#51032; &#54645;&#49900;<a class="anchor-link" href="#&#54028;&#51060;&#50028;&#51032;-&#54645;&#49900;"> </a></h4><ul>
 <li>시퀀스(Sequence)</li>
@@ -423,6 +423,151 @@ Called &gt;&gt; __sub__
 -4500
 Fruit Class Info : Orange , 7500
 Fruit Class Info : Banana , 3000
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h2 id="&#48372;&#52649;&#51648;&#49885;">&#48372;&#52649;&#51648;&#49885;<a class="anchor-link" href="#&#48372;&#52649;&#51648;&#49885;"> </a></h2><h4 id="*args">*args<a class="anchor-link" href="#*args"> </a></h4><p>매개변수 앞에 애스터리스크(*)를 붙여주면, 여러개의 변수를 하나의 튜플로 묶어 패킹(packing)해줌
+함수에 값을 넘길때, 리스트나 튜플같이 컨테이너형 변수에 애스터리스크를 붙이면 unpacking되어 전달된다.</p>
+<h4 id="**kwargs">**kwargs<a class="anchor-link" href="#**kwargs"> </a></h4><p>키와 밸류값을 가변적으로 패킹하여 전달받을 수 있다.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 클래스 예제2</span>
+<span class="c1"># 벡터를 다루는 클래스를 만들어보자</span>
+<span class="c1">## 예1) (5,2) + (4,3) = (9,5)</span>
+<span class="c1">## 예2) (10,3) * 3 = (50,15)</span>
+<span class="c1">## 예3) Max((5,10)) = 10</span>
+
+<span class="k">class</span> <span class="nc">Vector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span> <span class="c1"># packing해서 넘겨받아 나중에 unpacking</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		Create a vector, example : v = Vector(5,10)</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">args</span>
+
+	<span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;Returns the vector informations.&#39;&#39;&#39;</span>
+		<span class="k">return</span> <span class="s1">&#39;Vector(</span><span class="si">%r</span><span class="s1">, </span><span class="si">%r</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;Returns the vector addition of self and other&#39;&#39;&#39;</span>
+		<span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">_y</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+	
+	<span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">))</span> <span class="c1">#좌표 평면에서 0,0인지 확인</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>  <span class="c1">#클래스 자체의 주석은 없음</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="fm">__init__</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>  <span class="c1">#메소드 단위의 주석</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>None
+
+		Create a vector, example : v = Vector(5,10)
+		
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Vector 인스턴스 생성</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">53</span><span class="p">)</span>
+<span class="n">v3</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 매직메소드 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="fm">__init__</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="fm">__repr__</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Vector</span><span class="o">.</span><span class="fm">__add__</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v2</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">v2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">v3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+		Create a vector, example : v = Vector(5,10)
+		
+Returns the vector informations.
+Returns the vector addition of self and other
+Vector(5, 7) Vector(23, 53) Vector(0, 0)
+Vector(28, 60)
+Vector(15, 21)
+Vector(230, 530)
+True True
+False
 </pre>
 </div>
 </div>
