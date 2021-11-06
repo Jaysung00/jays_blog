@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>파이썬 예제2) 완주하지 못한 선수 | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="파이썬 예제2) 완주하지 못한 선수" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Programmers (Coding Test Practice &gt; 해시 &gt; 완주하지 못한 선수)" />
+<meta property="og:description" content="Programmers (Coding Test Practice &gt; 해시 &gt; 완주하지 못한 선수)" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/2021/10/17/PGM_hash1.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/2021/10/17/PGM_hash1.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-17T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/2021/10/17/PGM_hash1.html","@type":"BlogPosting","headline":"파이썬 예제2) 완주하지 못한 선수","dateModified":"2021-10-17T00:00:00-05:00","datePublished":"2021-10-17T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/2021/10/17/PGM_hash1.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"Programmers (Coding Test Practice &gt; 해시 &gt; 완주하지 못한 선수)","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">파이썬 예제2) 완주하지 못한 선수</h1><p class="page-description"><a href='https://programmers.co.kr/learn/courses/30/lessons/42576?language=python3'>Programmers (Coding Test Practice > 해시 > 완주하지 못한 선수)</a></p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-17T00:00:00-05:00" itemprop="datePublished">
+        Oct 17, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  A. ENGINEERING __________ > PYTHON 문제풀이">___  A. ENGINEERING __________ > PYTHON 문제풀이</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-10-17-PGM_hash1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Description">Description<a class="anchor-link" href="#Description"> </a></h3><p>수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.</p>
+<p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.</p>
+<h3 id="&#51228;&#54620;&#49324;&#54637;">&#51228;&#54620;&#49324;&#54637;<a class="anchor-link" href="#&#51228;&#54620;&#49324;&#54637;"> </a></h3><p>마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
+completion의 길이는 participant의 길이보다 1 작습니다.
+참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
+참가자 중에는 동명이인이 있을 수 있습니다.</p>
+<h3 id="&#51077;&#52636;&#47141;-&#50696;">&#51077;&#52636;&#47141; &#50696;<a class="anchor-link" href="#&#51077;&#52636;&#47141;-&#50696;"> </a></h3><table>
+<thead><tr>
+<th>participant</th>
+<th>completion</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>["leo", "kiki", "eden"]</td>
+<td>["eden", "kiki"]</td>
+<td>"leo"</td>
+</tr>
+<tr>
+<td>["marina", "josipa", "nikola", "vinko", "filipa"]</td>
+<td>["josipa", "filipa", "marina", "nikola"]</td>
+<td>"vinko"</td>
+</tr>
+<tr>
+<td>["mislav", "stanko", "mislav", "ana"]</td>
+<td>["stanko", "ana", "mislav"]</td>
+<td>"mislav"</td>
+</tr>
+</tbody>
+</table>
+<p>입출력 예 설명</p>
+<p>예제 #1</p>
+<p>"leo"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
+<p>예제 #2</p>
+<p>"vinko"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
+<p>예제 #3</p>
+<p>"mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">participant</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;leo&quot;</span><span class="p">,</span> <span class="s2">&quot;kiki&quot;</span><span class="p">,</span> <span class="s2">&quot;eden&quot;</span><span class="p">]</span>
+<span class="n">completion</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eden&quot;</span><span class="p">,</span> <span class="s2">&quot;kiki&quot;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 첫번째 시도</span>
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">completion</span><span class="p">)):</span>
+        <span class="n">participant</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">participant</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">answer</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">))</span>  <span class="c1"># 정답은 무사히 나오지만 해시 구조를 사용하지 않았으므로, 효율성 면에서 오답처리</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>leo
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>해시란?</p>
+<p>해시(hash)란 데이터의 효율적 관리를 목적으로 임의의 길이의 데이터를 고정된 길이의 데이터로 매핑하는 자료구조이다.
+이 때 매핑 전 원래 데이터의 값을 키(key), 매핑 후 데이터의 값을 해시값(hash value), 매핑하는 과정 자체를 해싱(hashing)라고 한다.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 풀이 1</span>
+<span class="c1"># 해시</span>
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">):</span>
+	<span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">participant</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">hash</span><span class="p">:</span>
+			<span class="nb">hash</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nb">hash</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">completion</span><span class="p">:</span>
+		<span class="k">if</span> <span class="nb">hash</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">del</span> <span class="nb">hash</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nb">hash</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+	<span class="n">answer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">hash</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">return</span> <span class="n">answer</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>leo
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 풀이 2</span>
+<span class="c1"># 데이터의 개수를 셀 때 유용한 파이썬의 collections 모듈의 Counter 클래스 사용</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">):</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">participant</span><span class="p">)</span> <span class="o">-</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">completion</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>leo
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 풀이 3</span>
+<span class="c1"># 별도의 풀이. 정렬해서 다른 부분에서 찾는 방법</span>
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">):</span>
+	<span class="n">participant</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+	<span class="n">completion</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">completion</span><span class="p">)):</span>
+		<span class="k">if</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+			<span class="k">return</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+	<span class="k">return</span> <span class="n">participant</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">participant</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">completion</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;eden&#39;, &#39;kiki&#39;, &#39;leo&#39;]
+[&#39;eden&#39;, &#39;kiki&#39;]
+leo
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4/2021/10/17/PGM_hash1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Inflearn 파이썬 중급 - 시퀀스 (2-1, 2-2, 3, 4-1, 4-2) | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Inflearn 파이썬 중급 - 시퀀스 (2-1, 2-2, 3, 4-1, 4-2)" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A study record about Data Science" />
+<meta property="og:description" content="A study record about Data Science" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/04/TIL211104.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/04/TIL211104.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-04T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/04/TIL211104.html","@type":"BlogPosting","headline":"Inflearn 파이썬 중급 - 시퀀스 (2-1, 2-2, 3, 4-1, 4-2)","dateModified":"2021-11-04T00:00:00-05:00","datePublished":"2021-11-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/04/TIL211104.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Inflearn 파이썬 중급 - 시퀀스 (2-1, 2-2, 3, 4-1, 4-2)</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-04T00:00:00-05:00" itemprop="datePublished">
+        Nov 4, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  A. ENGINEERING __________ > PYTHON 인프런 강의">___  A. ENGINEERING __________ > PYTHON 인프런 강의</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-04-TIL211104.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#53916;&#54540;(Tuple)-&#44256;&#44553;&#49324;&#50857;">&#53916;&#54540;(Tuple) &#44256;&#44553;&#49324;&#50857;<a class="anchor-link" href="#&#53916;&#54540;(Tuple)-&#44256;&#44553;&#49324;&#50857;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tuple Advanced</span>
+<span class="c1"># Unpacking</span>
+
+<span class="c1"># b, a = a, b</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">9</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">9</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(11, 1)
+(11, 1)
+11 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rest</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rest</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>  <span class="c1"># 컴마만 사용하면 자동으로 튜플되는거 까먹지않기</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rest</span><span class="p">)</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>  <span class="c1"># 왜 튜플이 아니라 리스트인걸까....?</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0 1 [2, 3, 4, 5, 6, 7, 8, 9]
+0 1 []
+1 2 [3, 4, 5]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>list</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="Mutable(&#44032;&#48320;)-vs-Immutable(&#48520;&#48320;)">Mutable(&#44032;&#48320;) vs Immutable(&#48520;&#48320;)<a class="anchor-link" href="#Mutable(&#44032;&#48320;)-vs-Immutable(&#48520;&#48320;)"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span> <span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span> <span class="p">,</span><span class="mi">25</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="n">l</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+<span class="n">l</span> <span class="o">*=</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">*=</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">l</span><span class="p">))</span> <span class="c1"># 튜플형은 계속 새로운 id값을 만들며 재할당 할 수 밖에없음</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="c1"># 연산자의 활용에 따라 리스트는 자기 자신의 id에 추가를 하기도 한다.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(15, 20, 25) 4504239200
+[15, 20, 25] 4502056648
+(15, 20, 25, 15, 20, 25) 4504075624
+[15, 20, 25, 15, 20, 25] 4504115464
+(15, 20, 25, 15, 20, 25, 15, 20, 25, 15, 20, 25) 4451539992
+[15, 20, 25, 15, 20, 25, 15, 20, 25, 15, 20, 25] 4504115464
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="Sort-vs-Sorted-&#49892;&#49845;">Sort vs Sorted &#49892;&#49845;<a class="anchor-link" href="#Sort-vs-Sorted-&#49892;&#49845;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## reverse, key=len, key=str.lower, key =func ...</span>
+
+<span class="c1"># sorted : 정렬 후 새로운 객체 반환</span>
+<span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">,</span> <span class="s1">&#39;papaya&#39;</span><span class="p">,</span> <span class="s1">&#39;lemon&#39;</span><span class="p">,</span> <span class="s1">&#39;strawberry&#39;</span><span class="p">,</span> <span class="s1">&#39;coconut&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted - &#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f_list</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted - &#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f_list</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="c1"># 역순</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted - &#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span> <span class="c1"># 길이순 정렬</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted - &#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="c1">#(람다)함수를 통해 마지막글자 비교</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted - &#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>sorted -  [&#39;apple&#39;, &#39;coconut&#39;, &#39;lemon&#39;, &#39;mango&#39;, &#39;orange&#39;, &#39;papaya&#39;, &#39;strawberry&#39;]
+sorted -  [&#39;strawberry&#39;, &#39;papaya&#39;, &#39;orange&#39;, &#39;mango&#39;, &#39;lemon&#39;, &#39;coconut&#39;, &#39;apple&#39;]
+sorted -  [&#39;apple&#39;, &#39;mango&#39;, &#39;lemon&#39;, &#39;orange&#39;, &#39;papaya&#39;, &#39;coconut&#39;, &#39;strawberry&#39;]
+sorted -  [&#39;papaya&#39;, &#39;orange&#39;, &#39;apple&#39;, &#39;lemon&#39;, &#39;mango&#39;, &#39;coconut&#39;, &#39;strawberry&#39;]
+sorted -  [&#39;strawberry&#39;, &#39;coconut&#39;, &#39;mango&#39;, &#39;lemon&#39;, &#39;orange&#39;, &#39;apple&#39;, &#39;papaya&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># sort : 정렬 후 객체 직접 변경</span>
+
+<span class="c1"># 반환 값 확인(None)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sort - &#39;</span><span class="p">,</span> <span class="n">f_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(),</span> <span class="n">f_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sort - &#39;</span><span class="p">,</span> <span class="n">f_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">f_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sort - &#39;</span><span class="p">,</span> <span class="n">f_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">f_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sort - &#39;</span><span class="p">,</span> <span class="n">f_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">f_list</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>sort -  None [&#39;apple&#39;, &#39;coconut&#39;, &#39;lemon&#39;, &#39;mango&#39;, &#39;orange&#39;, &#39;papaya&#39;, &#39;strawberry&#39;]
+sort -  None [&#39;strawberry&#39;, &#39;papaya&#39;, &#39;orange&#39;, &#39;mango&#39;, &#39;lemon&#39;, &#39;coconut&#39;, &#39;apple&#39;]
+sort -  None [&#39;papaya&#39;, &#39;orange&#39;, &#39;apple&#39;, &#39;lemon&#39;, &#39;mango&#39;, &#39;coconut&#39;, &#39;strawberry&#39;]
+sort -  None [&#39;strawberry&#39;, &#39;coconut&#39;, &#39;mango&#39;, &#39;lemon&#39;, &#39;orange&#39;, &#39;apple&#39;, &#39;papaya&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="List-vs-Array(&#48176;&#50676;)-&#51201;&#54633;&#54620;-&#49324;&#50857;&#48277;&#51008;?">List vs Array(&#48176;&#50676;) &#51201;&#54633;&#54620; &#49324;&#50857;&#48277;&#51008;?<a class="anchor-link" href="#List-vs-Array(&#48176;&#50676;)-&#51201;&#54633;&#54620;-&#49324;&#50857;&#48277;&#51008;?"> </a></h2><ul>
+<li>list의 장점 : 융통성이 좋다. 다양한 자료형과 범용적 사용</li>
+<li>array(배열)의 장점 : 숫자기반의 고속연산에 유리</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#54644;&#49884;-&#53580;&#51060;&#48660;-(Hashtable)">&#54644;&#49884; &#53580;&#51060;&#48660; (Hashtable)<a class="anchor-link" href="#&#54644;&#49884;-&#53580;&#51060;&#48660;-(Hashtable)"> </a></h2><ul>
+<li>적은 리소스로 많은 데이터를 효율적으로 관리</li>
+<li>key에 value를 저장하는 구조</li>
+<li>파이썬에서는 dictionary가 해시테이블의 예이다.</li>
+<li>장점은, 키 값의 연산 결과에 따라 직접 접근이 가능한 구조</li>
+<li>key값을 해싱함수를 통해 해시주소값을 찾아내고, 그것을 기반으로 key에 대한 value를 참조하는 원리</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dict 구조</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">__builtins__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span> <span class="c1"># key-value 구조</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;__name__&#39;: &#39;builtins&#39;, &#39;__doc__&#39;: &#34;Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil&#39; object; Ellipsis represents `...&#39; in slices.&#34;, &#39;__package__&#39;: &#39;&#39;, &#39;__loader__&#39;: &lt;class &#39;_frozen_importlib.BuiltinImporter&#39;&gt;, &#39;__spec__&#39;: ModuleSpec(name=&#39;builtins&#39;, loader=&lt;class &#39;_frozen_importlib.BuiltinImporter&#39;&gt;), &#39;__build_class__&#39;: &lt;built-in function __build_class__&gt;, &#39;__import__&#39;: &lt;built-in function __import__&gt;, &#39;abs&#39;: &lt;built-in function abs&gt;, &#39;all&#39;: &lt;built-in function all&gt;, &#39;any&#39;: &lt;built-in function any&gt;, &#39;ascii&#39;: &lt;built-in function ascii&gt;, &#39;bin&#39;: &lt;built-in function bin&gt;, &#39;breakpoint&#39;: &lt;built-in function breakpoint&gt;, &#39;callable&#39;: &lt;built-in function callable&gt;, &#39;chr&#39;: &lt;built-in function chr&gt;, &#39;compile&#39;: &lt;built-in function compile&gt;, &#39;delattr&#39;: &lt;built-in function delattr&gt;, &#39;dir&#39;: &lt;built-in function dir&gt;, &#39;divmod&#39;: &lt;built-in function divmod&gt;, &#39;eval&#39;: &lt;built-in function eval&gt;, &#39;exec&#39;: &lt;built-in function exec&gt;, &#39;format&#39;: &lt;built-in function format&gt;, &#39;getattr&#39;: &lt;built-in function getattr&gt;, &#39;globals&#39;: &lt;built-in function globals&gt;, &#39;hasattr&#39;: &lt;built-in function hasattr&gt;, &#39;hash&#39;: &lt;built-in function hash&gt;, &#39;hex&#39;: &lt;built-in function hex&gt;, &#39;id&#39;: &lt;built-in function id&gt;, &#39;input&#39;: &lt;bound method Kernel.raw_input of &lt;ipykernel.ipkernel.IPythonKernel object at 0x10c589d68&gt;&gt;, &#39;isinstance&#39;: &lt;built-in function isinstance&gt;, &#39;issubclass&#39;: &lt;built-in function issubclass&gt;, &#39;iter&#39;: &lt;built-in function iter&gt;, &#39;len&#39;: &lt;built-in function len&gt;, &#39;locals&#39;: &lt;built-in function locals&gt;, &#39;max&#39;: &lt;built-in function max&gt;, &#39;min&#39;: &lt;built-in function min&gt;, &#39;next&#39;: &lt;built-in function next&gt;, &#39;oct&#39;: &lt;built-in function oct&gt;, &#39;ord&#39;: &lt;built-in function ord&gt;, &#39;pow&#39;: &lt;built-in function pow&gt;, &#39;print&#39;: &lt;built-in function print&gt;, &#39;repr&#39;: &lt;built-in function repr&gt;, &#39;round&#39;: &lt;built-in function round&gt;, &#39;setattr&#39;: &lt;built-in function setattr&gt;, &#39;sorted&#39;: &lt;built-in function sorted&gt;, &#39;sum&#39;: &lt;built-in function sum&gt;, &#39;vars&#39;: &lt;built-in function vars&gt;, &#39;None&#39;: None, &#39;Ellipsis&#39;: Ellipsis, &#39;NotImplemented&#39;: NotImplemented, &#39;False&#39;: False, &#39;True&#39;: True, &#39;bool&#39;: &lt;class &#39;bool&#39;&gt;, &#39;memoryview&#39;: &lt;class &#39;memoryview&#39;&gt;, &#39;bytearray&#39;: &lt;class &#39;bytearray&#39;&gt;, &#39;bytes&#39;: &lt;class &#39;bytes&#39;&gt;, &#39;classmethod&#39;: &lt;class &#39;classmethod&#39;&gt;, &#39;complex&#39;: &lt;class &#39;complex&#39;&gt;, &#39;dict&#39;: &lt;class &#39;dict&#39;&gt;, &#39;enumerate&#39;: &lt;class &#39;enumerate&#39;&gt;, &#39;filter&#39;: &lt;class &#39;filter&#39;&gt;, &#39;float&#39;: &lt;class &#39;float&#39;&gt;, &#39;frozenset&#39;: &lt;class &#39;frozenset&#39;&gt;, &#39;property&#39;: &lt;class &#39;property&#39;&gt;, &#39;int&#39;: &lt;class &#39;int&#39;&gt;, &#39;list&#39;: &lt;class &#39;list&#39;&gt;, &#39;map&#39;: &lt;class &#39;map&#39;&gt;, &#39;object&#39;: &lt;class &#39;object&#39;&gt;, &#39;range&#39;: &lt;class &#39;range&#39;&gt;, &#39;reversed&#39;: &lt;class &#39;reversed&#39;&gt;, &#39;set&#39;: &lt;class &#39;set&#39;&gt;, &#39;slice&#39;: &lt;class &#39;slice&#39;&gt;, &#39;staticmethod&#39;: &lt;class &#39;staticmethod&#39;&gt;, &#39;str&#39;: &lt;class &#39;str&#39;&gt;, &#39;super&#39;: &lt;class &#39;super&#39;&gt;, &#39;tuple&#39;: &lt;class &#39;tuple&#39;&gt;, &#39;type&#39;: &lt;class &#39;type&#39;&gt;, &#39;zip&#39;: &lt;class &#39;zip&#39;&gt;, &#39;__debug__&#39;: True, &#39;BaseException&#39;: &lt;class &#39;BaseException&#39;&gt;, &#39;Exception&#39;: &lt;class &#39;Exception&#39;&gt;, &#39;TypeError&#39;: &lt;class &#39;TypeError&#39;&gt;, &#39;StopAsyncIteration&#39;: &lt;class &#39;StopAsyncIteration&#39;&gt;, &#39;StopIteration&#39;: &lt;class &#39;StopIteration&#39;&gt;, &#39;GeneratorExit&#39;: &lt;class &#39;GeneratorExit&#39;&gt;, &#39;SystemExit&#39;: &lt;class &#39;SystemExit&#39;&gt;, &#39;KeyboardInterrupt&#39;: &lt;class &#39;KeyboardInterrupt&#39;&gt;, &#39;ImportError&#39;: &lt;class &#39;ImportError&#39;&gt;, &#39;ModuleNotFoundError&#39;: &lt;class &#39;ModuleNotFoundError&#39;&gt;, &#39;OSError&#39;: &lt;class &#39;OSError&#39;&gt;, &#39;EnvironmentError&#39;: &lt;class &#39;OSError&#39;&gt;, &#39;IOError&#39;: &lt;class &#39;OSError&#39;&gt;, &#39;EOFError&#39;: &lt;class &#39;EOFError&#39;&gt;, &#39;RuntimeError&#39;: &lt;class &#39;RuntimeError&#39;&gt;, &#39;RecursionError&#39;: &lt;class &#39;RecursionError&#39;&gt;, &#39;NotImplementedError&#39;: &lt;class &#39;NotImplementedError&#39;&gt;, &#39;NameError&#39;: &lt;class &#39;NameError&#39;&gt;, &#39;UnboundLocalError&#39;: &lt;class &#39;UnboundLocalError&#39;&gt;, &#39;AttributeError&#39;: &lt;class &#39;AttributeError&#39;&gt;, &#39;SyntaxError&#39;: &lt;class &#39;SyntaxError&#39;&gt;, &#39;IndentationError&#39;: &lt;class &#39;IndentationError&#39;&gt;, &#39;TabError&#39;: &lt;class &#39;TabError&#39;&gt;, &#39;LookupError&#39;: &lt;class &#39;LookupError&#39;&gt;, &#39;IndexError&#39;: &lt;class &#39;IndexError&#39;&gt;, &#39;KeyError&#39;: &lt;class &#39;KeyError&#39;&gt;, &#39;ValueError&#39;: &lt;class &#39;ValueError&#39;&gt;, &#39;UnicodeError&#39;: &lt;class &#39;UnicodeError&#39;&gt;, &#39;UnicodeEncodeError&#39;: &lt;class &#39;UnicodeEncodeError&#39;&gt;, &#39;UnicodeDecodeError&#39;: &lt;class &#39;UnicodeDecodeError&#39;&gt;, &#39;UnicodeTranslateError&#39;: &lt;class &#39;UnicodeTranslateError&#39;&gt;, &#39;AssertionError&#39;: &lt;class &#39;AssertionError&#39;&gt;, &#39;ArithmeticError&#39;: &lt;class &#39;ArithmeticError&#39;&gt;, &#39;FloatingPointError&#39;: &lt;class &#39;FloatingPointError&#39;&gt;, &#39;OverflowError&#39;: &lt;class &#39;OverflowError&#39;&gt;, &#39;ZeroDivisionError&#39;: &lt;class &#39;ZeroDivisionError&#39;&gt;, &#39;SystemError&#39;: &lt;class &#39;SystemError&#39;&gt;, &#39;ReferenceError&#39;: &lt;class &#39;ReferenceError&#39;&gt;, &#39;MemoryError&#39;: &lt;class &#39;MemoryError&#39;&gt;, &#39;BufferError&#39;: &lt;class &#39;BufferError&#39;&gt;, &#39;Warning&#39;: &lt;class &#39;Warning&#39;&gt;, &#39;UserWarning&#39;: &lt;class &#39;UserWarning&#39;&gt;, &#39;DeprecationWarning&#39;: &lt;class &#39;DeprecationWarning&#39;&gt;, &#39;PendingDeprecationWarning&#39;: &lt;class &#39;PendingDeprecationWarning&#39;&gt;, &#39;SyntaxWarning&#39;: &lt;class &#39;SyntaxWarning&#39;&gt;, &#39;RuntimeWarning&#39;: &lt;class &#39;RuntimeWarning&#39;&gt;, &#39;FutureWarning&#39;: &lt;class &#39;FutureWarning&#39;&gt;, &#39;ImportWarning&#39;: &lt;class &#39;ImportWarning&#39;&gt;, &#39;UnicodeWarning&#39;: &lt;class &#39;UnicodeWarning&#39;&gt;, &#39;BytesWarning&#39;: &lt;class &#39;BytesWarning&#39;&gt;, &#39;ResourceWarning&#39;: &lt;class &#39;ResourceWarning&#39;&gt;, &#39;ConnectionError&#39;: &lt;class &#39;ConnectionError&#39;&gt;, &#39;BlockingIOError&#39;: &lt;class &#39;BlockingIOError&#39;&gt;, &#39;BrokenPipeError&#39;: &lt;class &#39;BrokenPipeError&#39;&gt;, &#39;ChildProcessError&#39;: &lt;class &#39;ChildProcessError&#39;&gt;, &#39;ConnectionAbortedError&#39;: &lt;class &#39;ConnectionAbortedError&#39;&gt;, &#39;ConnectionRefusedError&#39;: &lt;class &#39;ConnectionRefusedError&#39;&gt;, &#39;ConnectionResetError&#39;: &lt;class &#39;ConnectionResetError&#39;&gt;, &#39;FileExistsError&#39;: &lt;class &#39;FileExistsError&#39;&gt;, &#39;FileNotFoundError&#39;: &lt;class &#39;FileNotFoundError&#39;&gt;, &#39;IsADirectoryError&#39;: &lt;class &#39;IsADirectoryError&#39;&gt;, &#39;NotADirectoryError&#39;: &lt;class &#39;NotADirectoryError&#39;&gt;, &#39;InterruptedError&#39;: &lt;class &#39;InterruptedError&#39;&gt;, &#39;PermissionError&#39;: &lt;class &#39;PermissionError&#39;&gt;, &#39;ProcessLookupError&#39;: &lt;class &#39;ProcessLookupError&#39;&gt;, &#39;TimeoutError&#39;: &lt;class &#39;TimeoutError&#39;&gt;, &#39;open&#39;: &lt;built-in function open&gt;, &#39;copyright&#39;: Copyright (c) 2001-2019 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., &#39;credits&#39;:     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., &#39;license&#39;: Type license() to see the full license text, &#39;help&#39;: Type help() for interactive help, or help(object) for help about object., &#39;__IPYTHON__&#39;: True, &#39;display&#39;: &lt;function display at 0x1097cf400&gt;, &#39;get_ipython&#39;: &lt;bound method InteractiveShell.get_ipython of &lt;ipykernel.zmqshell.ZMQInteractiveShell object at 0x10aa57ac8&gt;&gt;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Hash 값 확인</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="n">t1</span><span class="p">))</span> <span class="c1"># hash() 안에는 불변형만 가능하다</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="n">t2</span><span class="p">))</span> <span class="c1"># 리스트는 수정이 가능하기 때문에 해시값을 뽑아낼 수 없다.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5737367089334957572
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-29-db22618e85af&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> 
+<span class="ansi-green-intense-fg ansi-bold">      7</span> print<span class="ansi-blue-fg">(</span>hash<span class="ansi-blue-fg">(</span>t1<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># hash() 안에는 불변형만 가능하다</span>
+<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>hash<span class="ansi-blue-fg">(</span>t2<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># 리스트는 수정이 가능하기 때문에 해시값을 뽑아낼 수 없다.</span>
+
+<span class="ansi-red-fg">TypeError</span>: unhashable type: &#39;list&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="Setdefault-&#49324;&#50857;&#48277;">Setdefault &#49324;&#50857;&#48277;<a class="anchor-link" href="#Setdefault-&#49324;&#50857;&#48277;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Dict Setdefault 예제</span>
+
+<span class="c1"># source라는 tuple을 해시테이블로 만들어보자.</span>
+<span class="n">source</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;k1&#39;</span><span class="p">,</span> <span class="s1">&#39;val1&#39;</span><span class="p">),</span>
+		  <span class="p">(</span><span class="s1">&#39;k1&#39;</span><span class="p">,</span> <span class="s1">&#39;val2&#39;</span><span class="p">),</span>
+		  <span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="s1">&#39;val3&#39;</span><span class="p">),</span>
+		  <span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="s1">&#39;val4&#39;</span><span class="p">),</span>
+		  <span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="s1">&#39;val5&#39;</span><span class="p">))</span>
+
+<span class="n">new_dict1</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">new_dict2</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># No use Setdefault</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+	<span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">new_dict1</span><span class="p">:</span>
+		<span class="n">new_dict1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">new_dict1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">new_dict1</span><span class="p">)</span>
+
+<span class="c1"># Use Setdefault</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+	<span class="n">new_dict2</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">new_dict2</span><span class="p">)</span>
+
+<span class="c1"># 주의</span>
+<span class="n">new_dict3</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">source</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">new_dict3</span><span class="p">)</span>  <span class="c1"># 같은 key값은 덮어써버리므로 원하는 모양이 아님</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;k1&#39;: [&#39;val1&#39;, &#39;val2&#39;], &#39;k2&#39;: [&#39;val3&#39;, &#39;val4&#39;, &#39;val5&#39;]}
+{&#39;k1&#39;: [&#39;val1&#39;, &#39;val2&#39;], &#39;k2&#39;: [&#39;val3&#39;, &#39;val4&#39;, &#39;val5&#39;]}
+{&#39;k1&#39;: &#39;val2&#39;, &#39;k2&#39;: &#39;val5&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="Immutable-Dict-&#49373;&#49457;">Immutable Dict &#49373;&#49457;<a class="anchor-link" href="#Immutable-Dict-&#49373;&#49457;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">MappingProxyType</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key1&#39;</span> <span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">}</span>
+
+<span class="c1"># Creat Read Only Dict</span>
+<span class="n">d_frozen</span> <span class="o">=</span> <span class="n">MappingProxyType</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_frozen</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">d_frozen</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;key1&#39;: &#39;value1&#39;} 4504371136
+{&#39;key1&#39;: &#39;value1&#39;} 4504385336
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Mutable Dict</span>
+
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;key2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value2&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: &#39;value2&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># immutable Dict</span>
+
+<span class="n">d_frozen</span><span class="p">[</span><span class="s1">&#39;key2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value2&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_frozen</span><span class="p">)</span>  <span class="c1"># 수정불가</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-41-41483b3de209&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-red-fg"># immutable Dict</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> 
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>d_frozen<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;key2&#39;</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;value2&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> print<span class="ansi-blue-fg">(</span>d_frozen<span class="ansi-blue-fg">)</span>  <span class="ansi-red-fg"># 수정불가</span>
+
+<span class="ansi-red-fg">TypeError</span>: &#39;mappingproxy&#39; object does not support item assignment</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="Immutable-Set-&#49373;&#49457;">Immutable Set &#49373;&#49457;<a class="anchor-link" href="#Immutable-Set-&#49373;&#49457;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 집합 선언 방법</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Kiwi&#39;</span><span class="p">}</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Kiwi&#39;</span><span class="p">])</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">s4</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># Not {} =&gt; dict</span>
+<span class="n">s5</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Kiwi&#39;</span><span class="p">})</span> <span class="c1"># 불변</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;Melon&#39;, &#39;Kiwi&#39;, &#39;Apple&#39;, &#39;Orange&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 기본은 수정가능</span>
+<span class="n">s1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Melon&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;Melon&#39;, &#39;Kiwi&#39;, &#39;Apple&#39;, &#39;Orange&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># frozen set은 수정불가</span>
+<span class="n">s5</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Melon&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-46-ac373a51cfc9&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> 
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-red-fg"># frozen set은 수정불가</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>s5<span class="ansi-blue-fg">.</span>add<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Melon&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> print<span class="ansi-blue-fg">(</span>s5<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;frozenset&#39; object has no attribute &#39;add&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 선언 최적화</span>
+<span class="c1"># 바이트코드 -&gt; 파이썬 인터프리터 설정</span>
+<span class="kn">from</span> <span class="nn">dis</span> <span class="kn">import</span> <span class="n">dis</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dis</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{10}</span><span class="s1">&#39;</span><span class="p">))</span> <span class="c1"># 이쪽이 더 최적화된 선언방법!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dis</span><span class="p">(</span><span class="s1">&#39;set([10])&#39;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>------
+  1           0 LOAD_CONST               0 (10)
+              2 BUILD_SET                1
+              4 RETURN_VALUE
+None
+------
+  1           0 LOAD_NAME                0 (set)
+              2 LOAD_CONST               0 (10)
+              4 BUILD_LIST               1
+              6 CALL_FUNCTION            1
+              8 RETURN_VALUE
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#51648;&#45733;&#54805;-&#51665;&#54633;(Comprehending-Set)">&#51648;&#45733;&#54805; &#51665;&#54633;(Comprehending Set)<a class="anchor-link" href="#&#51648;&#45733;&#54805;-&#51665;&#54633;(Comprehending-Set)"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">unicodedata</span> <span class="kn">import</span> <span class="n">name</span>
+
+<span class="nb">print</span><span class="p">({</span><span class="n">name</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">)})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;&#39;, &#39;BROKEN BAR&#39;, &#39;DOLLAR SIGN&#39;, &#39;GREATER-THAN SIGN&#39;, &#39;LATIN SMALL LETTER C WITH CEDILLA&#39;, &#39;QUESTION MARK&#39;, &#39;LATIN CAPITAL LETTER O WITH GRAVE&#39;, &#39;LATIN SMALL LETTER Y WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER C&#39;, &#39;ASTERISK&#39;, &#39;LATIN CAPITAL LETTER U&#39;, &#39;LATIN CAPITAL LETTER E&#39;, &#39;LATIN CAPITAL LETTER I WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER A WITH CIRCUMFLEX&#39;, &#39;VULGAR FRACTION THREE QUARTERS&#39;, &#39;LATIN SMALL LETTER J&#39;, &#39;LATIN SMALL LETTER N&#39;, &#39;LATIN SMALL LETTER H&#39;, &#39;LATIN SMALL LETTER O&#39;, &#39;DIGIT ZERO&#39;, &#39;LATIN SMALL LETTER T&#39;, &#39;NOT SIGN&#39;, &#39;LATIN SMALL LETTER I WITH CIRCUMFLEX&#39;, &#39;LATIN SMALL LETTER B&#39;, &#39;LATIN SMALL LETTER A WITH RING ABOVE&#39;, &#39;CEDILLA&#39;, &#39;LATIN CAPITAL LETTER Z&#39;, &#39;LATIN SMALL LETTER O WITH CIRCUMFLEX&#39;, &#39;NUMBER SIGN&#39;, &#39;RIGHT CURLY BRACKET&#39;, &#39;LATIN SMALL LETTER SHARP S&#39;, &#39;LATIN SMALL LETTER I WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER A WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER F&#39;, &#39;LATIN SMALL LETTER K&#39;, &#39;APOSTROPHE&#39;, &#39;DIAERESIS&#39;, &#39;AMPERSAND&#39;, &#39;LATIN CAPITAL LETTER T&#39;, &#39;LATIN SMALL LETTER I&#39;, &#39;LATIN SMALL LETTER M&#39;, &#39;LATIN SMALL LETTER E WITH GRAVE&#39;, &#39;DIGIT EIGHT&#39;, &#39;DIGIT NINE&#39;, &#39;LATIN SMALL LETTER W&#39;, &#39;LATIN SMALL LETTER THORN&#39;, &#39;LATIN SMALL LETTER A WITH GRAVE&#39;, &#39;DIGIT FOUR&#39;, &#39;LATIN SMALL LETTER O WITH DIAERESIS&#39;, &#39;LATIN SMALL LETTER L&#39;, &#39;LATIN SMALL LETTER F&#39;, &#39;COPYRIGHT SIGN&#39;, &#39;LATIN CAPITAL LETTER A WITH GRAVE&#39;, &#39;PLUS-MINUS SIGN&#39;, &#39;SUPERSCRIPT ONE&#39;, &#39;LATIN SMALL LETTER Z&#39;, &#39;LATIN CAPITAL LETTER B&#39;, &#39;HYPHEN-MINUS&#39;, &#39;PLUS SIGN&#39;, &#39;LATIN CAPITAL LETTER V&#39;, &#39;LATIN SMALL LETTER U WITH DIAERESIS&#39;, &#39;POUND SIGN&#39;, &#39;DIGIT FIVE&#39;, &#39;SUPERSCRIPT THREE&#39;, &#39;PERCENT SIGN&#39;, &#39;LATIN SMALL LETTER U WITH GRAVE&#39;, &#39;REVERSE SOLIDUS&#39;, &#39;LATIN CAPITAL LETTER O&#39;, &#39;LATIN CAPITAL LETTER W&#39;, &#39;LATIN SMALL LETTER E WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER R&#39;, &#39;YEN SIGN&#39;, &#39;SOLIDUS&#39;, &#39;GRAVE ACCENT&#39;, &#39;SPACE&#39;, &#39;MACRON&#39;, &#39;PILCROW SIGN&#39;, &#39;LATIN SMALL LETTER A WITH DIAERESIS&#39;, &#39;COMMERCIAL AT&#39;, &#39;LATIN SMALL LETTER A WITH ACUTE&#39;, &#39;EXCLAMATION MARK&#39;, &#39;LATIN CAPITAL LETTER U WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER Y WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER U WITH CIRCUMFLEX&#39;, &#39;CIRCUMFLEX ACCENT&#39;, &#39;COLON&#39;, &#39;TILDE&#39;, &#39;LATIN SMALL LETTER C&#39;, &#39;LEFT PARENTHESIS&#39;, &#39;LEFT SQUARE BRACKET&#39;, &#39;LATIN SMALL LETTER AE&#39;, &#39;COMMA&#39;, &#39;LATIN CAPITAL LETTER O WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER I&#39;, &#39;LATIN CAPITAL LETTER E WITH GRAVE&#39;, &#39;LATIN SMALL LETTER D&#39;, &#39;FEMININE ORDINAL INDICATOR&#39;, &#39;VULGAR FRACTION ONE QUARTER&#39;, &#39;NO-BREAK SPACE&#39;, &#39;LATIN CAPITAL LETTER A&#39;, &#39;LATIN CAPITAL LETTER N&#39;, &#39;LATIN CAPITAL LETTER AE&#39;, &#39;LATIN SMALL LETTER E WITH DIAERESIS&#39;, &#39;LATIN SMALL LETTER P&#39;, &#39;LATIN CAPITAL LETTER THORN&#39;, &#39;LOW LINE&#39;, &#39;LATIN CAPITAL LETTER M&#39;, &#39;VERTICAL LINE&#39;, &#39;DIGIT ONE&#39;, &#39;LATIN SMALL LETTER O WITH STROKE&#39;, &#39;RIGHT SQUARE BRACKET&#39;, &#39;LATIN CAPITAL LETTER E WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER ETH&#39;, &#39;LATIN SMALL LETTER N WITH TILDE&#39;, &#39;SOFT HYPHEN&#39;, &#39;LATIN CAPITAL LETTER K&#39;, &#39;DIGIT TWO&#39;, &#39;LATIN CAPITAL LETTER Y&#39;, &#39;LATIN CAPITAL LETTER O WITH STROKE&#39;, &#39;LATIN CAPITAL LETTER U WITH GRAVE&#39;, &#39;DIGIT SEVEN&#39;, &#39;CENT SIGN&#39;, &#39;LATIN SMALL LETTER U WITH ACUTE&#39;, &#39;LATIN SMALL LETTER R&#39;, &#39;LATIN CAPITAL LETTER J&#39;, &#39;MIDDLE DOT&#39;, &#39;LATIN CAPITAL LETTER G&#39;, &#39;LATIN CAPITAL LETTER O WITH TILDE&#39;, &#39;LATIN SMALL LETTER E WITH CIRCUMFLEX&#39;, &#39;LATIN SMALL LETTER O WITH ACUTE&#39;, &#39;LATIN CAPITAL LETTER I WITH DIAERESIS&#39;, &#39;QUOTATION MARK&#39;, &#39;LATIN SMALL LETTER X&#39;, &#39;LATIN CAPITAL LETTER O WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER H&#39;, &#39;LATIN SMALL LETTER A WITH CIRCUMFLEX&#39;, &#39;LATIN SMALL LETTER G&#39;, &#39;LATIN SMALL LETTER U WITH CIRCUMFLEX&#39;, &#39;LATIN SMALL LETTER S&#39;, &#39;INVERTED QUESTION MARK&#39;, &#39;LATIN SMALL LETTER V&#39;, &#39;EQUALS SIGN&#39;, &#39;LATIN CAPITAL LETTER S&#39;, &#39;REGISTERED SIGN&#39;, &#39;LATIN CAPITAL LETTER I WITH CIRCUMFLEX&#39;, &#39;LATIN SMALL LETTER I WITH GRAVE&#39;, &#39;CURRENCY SIGN&#39;, &#39;LATIN SMALL LETTER Y WITH ACUTE&#39;, &#39;MASCULINE ORDINAL INDICATOR&#39;, &#39;LATIN CAPITAL LETTER L&#39;, &#39;RIGHT PARENTHESIS&#39;, &#39;ACUTE ACCENT&#39;, &#39;INVERTED EXCLAMATION MARK&#39;, &#39;LATIN CAPITAL LETTER O WITH CIRCUMFLEX&#39;, &#39;LATIN CAPITAL LETTER X&#39;, &#39;DEGREE SIGN&#39;, &#39;RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK&#39;, &#39;LATIN CAPITAL LETTER A WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER A WITH TILDE&#39;, &#39;LATIN CAPITAL LETTER E WITH ACUTE&#39;, &#39;LATIN SMALL LETTER O WITH GRAVE&#39;, &#39;LATIN CAPITAL LETTER E WITH CIRCUMFLEX&#39;, &#39;MULTIPLICATION SIGN&#39;, &#39;LATIN SMALL LETTER U&#39;, &#39;LATIN CAPITAL LETTER A WITH RING ABOVE&#39;, &#39;DIGIT SIX&#39;, &#39;LATIN SMALL LETTER ETH&#39;, &#39;LATIN CAPITAL LETTER Q&#39;, &#39;LATIN CAPITAL LETTER N WITH TILDE&#39;, &#39;LEFT-POINTING DOUBLE ANGLE QUOTATION MARK&#39;, &#39;SECTION SIGN&#39;, &#39;MICRO SIGN&#39;, &#39;SUPERSCRIPT TWO&#39;, &#39;LATIN SMALL LETTER I WITH ACUTE&#39;, &#39;LATIN SMALL LETTER Q&#39;, &#39;LESS-THAN SIGN&#39;, &#39;LATIN CAPITAL LETTER D&#39;, &#39;LATIN CAPITAL LETTER I WITH GRAVE&#39;, &#39;LATIN SMALL LETTER A WITH TILDE&#39;, &#39;LATIN SMALL LETTER O WITH TILDE&#39;, &#39;DIGIT THREE&#39;, &#39;LATIN SMALL LETTER Y&#39;, &#39;LEFT CURLY BRACKET&#39;, &#39;SEMICOLON&#39;, &#39;LATIN CAPITAL LETTER P&#39;, &#39;LATIN CAPITAL LETTER U WITH DIAERESIS&#39;, &#39;LATIN CAPITAL LETTER C WITH CEDILLA&#39;, &#39;LATIN SMALL LETTER E&#39;, &#39;LATIN SMALL LETTER A&#39;, &#39;DIVISION SIGN&#39;, &#39;FULL STOP&#39;, &#39;VULGAR FRACTION ONE HALF&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20a.%20engineering%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/04/TIL211104.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

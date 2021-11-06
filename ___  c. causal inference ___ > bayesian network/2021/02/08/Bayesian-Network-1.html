@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Bayesian Networkとは何か？ ① | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Bayesian Networkとは何か？ ①" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Prof.‪Il-Chul Moon. 人工知能及び機械学習概論Ⅱ* まとめ, via Edwith" />
+<meta property="og:description" content="Prof.‪Il-Chul Moon. 人工知能及び機械学習概論Ⅱ* まとめ, via Edwith" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20c.%20causal%20inference%20___%20%3E%20bayesian%20network/2021/02/08/Bayesian-Network-1.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20c.%20causal%20inference%20___%20%3E%20bayesian%20network/2021/02/08/Bayesian-Network-1.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:image" content="https://jaysung00.github.io/jays_blog/images/bayesian_network.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-08T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20c.%20causal%20inference%20___%20%3E%20bayesian%20network/2021/02/08/Bayesian-Network-1.html","@type":"BlogPosting","headline":"Bayesian Networkとは何か？ ①","dateModified":"2021-02-08T00:00:00-06:00","datePublished":"2021-02-08T00:00:00-06:00","image":"https://jaysung00.github.io/jays_blog/images/bayesian_network.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20c.%20causal%20inference%20___%20%3E%20bayesian%20network/2021/02/08/Bayesian-Network-1.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"Prof.‪Il-Chul Moon. 人工知能及び機械学習概論Ⅱ* まとめ, via Edwith","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Bayesian Networkとは何か？ ①</h1><p class="page-description">Prof.‪Il-Chul Moon. <a href='https://www.edwith.org/machinelearning2__17). KOOC (KAIST Open Online Course'>人工知能及び機械学習概論Ⅱ</a>* まとめ, via Edwith</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-08T00:00:00-06:00" itemprop="datePublished">
+        Feb 8, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  C. CAUSAL INFERENCE ___ > Bayesian Network">___  C. CAUSAL INFERENCE ___ > Bayesian Network</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#ベイジアンネットワーク（BN;-Bayesian-Network）とは?">ベイジアンネットワーク（BN; Bayesian Network）とは? </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#用語の説明">用語の説明 </a></li>
+<li class="toc-entry toc-h3"><a href="#ベージュアンネットワーク（BN）-の条件">ベージュアンネットワーク（BN） の条件 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#まず確率に関する簡単な復習から">まず確率に関する簡単な復習から </a></li>
+<li class="toc-entry toc-h2"><a href="#ベイジアンネットワークのRules-of-Typical-Local-Structures">ベイジアンネットワークのRules of Typical Local Structures </a></li>
+<li class="toc-entry toc-h2"><a href="#Bayes-Ball-Algorithm">Bayes Ball Algorithm </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Bayes-Ball-Algorithmの例題">Bayes Ball Algorithmの例題 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#$d$-Seperationの定義">$d$-Seperationの定義 </a></li>
+<li class="toc-entry toc-h2"><a href="#Additional-reference">Additional reference </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-02-08-Bayesian-Network-1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="ベイジアンネットワーク（BN;-Bayesian-Network）とは?">
+<a class="anchor" href="#%E3%83%99%E3%82%A4%E3%82%B8%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%88BN;-Bayesian-Network%EF%BC%89%E3%81%A8%E3%81%AF?" aria-hidden="true"><span class="octicon octicon-link"></span></a>ベイジアンネットワーク（BN; Bayesian Network）とは?<a class="anchor-link" href="#%E3%83%99%E3%82%A4%E3%82%B8%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%88BN;-Bayesian-Network%EF%BC%89%E3%81%A8%E3%81%AF?"> </a>
+</h2>
+<hr>
+<ul>
+<li>確率変数（RV;Random variables）間の条件付き独立などの関係を見せることにより、RVのfull joint distributionなどを簡潔に表現できる<strong>グラフ表記法（Graphical Notation）</strong>である。</li>
+</ul>
+<p><br></p>
+<h3 id="用語の説明">
+<a class="anchor" href="#%E7%94%A8%E8%AA%9E%E3%81%AE%E8%AA%AC%E6%98%8E" aria-hidden="true"><span class="octicon octicon-link"></span></a>用語の説明<a class="anchor-link" href="#%E7%94%A8%E8%AA%9E%E3%81%AE%E8%AA%AC%E6%98%8E"> </a>
+</h3>
+<ul>
+<li>
+<p>ここで <strong>グラフ（Graph）</strong> とは、数学においてチャート（Chart）と対照されて定義された <code>node</code>と<code>edge</code>の集合</p>
+</li>
+<li>
+<p><code>edge</code>の方向が指定されていれば<code>directed</code>、そうでなければ<code>undirected</code></p>
+</li>
+<li>
+<p>グラフの全ての<code>edge</code>が<code>directed</code>の時、<code>directed graph</code></p>
+</li>
+<li>
+<p><code>directed edge</code>において、始まる側のノードを<code>parent node</code>とし、反対側は<code>child node</code>と言う。</p>
+</li>
+<li>
+<p>つながっている複数の<code>directed edge</code>の方向が同じ場合、これを<code>directed path</code>とし、<code>directed path</code>の最初のノードは経路上のすべてのノードの<code>ancestor node</code>であり、逆に残りのノードは最初のノードの<code>descendant node</code>である。</p>
+</li>
+<li>
+<p><code>directed path</code>の開始点と終了点が一致する場合はこれを<code>cyclic</code>、そうでない場合は<code>acyclic</code>と呼ぶ。</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><br></p>
+<h3 id="ベージュアンネットワーク（BN）-の条件">
+<a class="anchor" href="#%E3%83%99%E3%83%BC%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%88BN%EF%BC%89-%E3%81%AE%E6%9D%A1%E4%BB%B6" aria-hidden="true"><span class="octicon octicon-link"></span></a>ベージュアンネットワーク（BN） の条件<a class="anchor-link" href="#%E3%83%99%E3%83%BC%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%88BN%EF%BC%89-%E3%81%AE%E6%9D%A1%E4%BB%B6"> </a>
+</h3>
+<ul>
+<li>
+<p><code>Network</code>は<code>Node</code>と彼らを繋ぐ<code>Edge</code>で構成されている。</p>
+</li>
+<li>
+<p><code>方向性の非循環グラフ（DAG; Directed Acyclic Graph）</code>である。</p>
+</li>
+<li>
+<p>個別の<code>Node</code>はRVである$X$に対して$\bf P(X | Paranets(X))$を意味する。</p>
+</li>
+<li>
+<p>個別の<code>Edge</code>とは親が子供に与える<strong>直接的な影響（Direct Influence）</strong> を意味する。</p>
+</li>
+</ul>
+<p><br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="まず確率に関する簡単な復習から">
+<a class="anchor" href="#%E3%81%BE%E3%81%9A%E7%A2%BA%E7%8E%87%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E7%B0%A1%E5%8D%98%E3%81%AA%E5%BE%A9%E7%BF%92%E3%81%8B%E3%82%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>まず確率に関する簡単な復習から<a class="anchor-link" href="#%E3%81%BE%E3%81%9A%E7%A2%BA%E7%8E%87%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E7%B0%A1%E5%8D%98%E3%81%AA%E5%BE%A9%E7%BF%92%E3%81%8B%E3%82%89"> </a>
+</h2>
+<hr>
+<ul>
+<li>
+<strong>ベージュアンネットワーク</strong>というものは結局<strong>確率変数（RV）間の関係</strong>を表現したものである。</li>
+<li>
+<strong>確率</strong>というのは<strong>相対的な頻度</strong>である。</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>独立性 （Independence）</p>
+</blockquote>
+<ul>
+<li>
+<p>$P(A|B) = P(A)$<br>
+$\Leftrightarrow P(A,B) = P(A)P(B)$<br>
+$\Leftrightarrow P(B|A) = P(B) $; A とB が独立ならば、B はA と独立である。</p>
+<ul>
+<li>
+<p>事象Bが発生したという情報は、事象Aが発生する確率に追加的な情報を提供しない。</p>
+</li>
+<li>
+<p>これは、下述のConditional Independence と対立する意味で Marginal Independence と言える。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>条件付き独立（Conditional Independence）</p>
+</blockquote>
+<ul>
+<li>
+<p>$P(A|B,C) = P(A|C)$</p>
+<ul>
+<li>事象Cが与えられたときに二つの事象AとBが独立なら、これはCという条件の下で<em>条件付き独立</em> である。</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>条件付き確率（Conditional Probability）</p>
+</blockquote>
+<ul>
+<li>
+<p>$P(A= true|B=true)$</p>
+<ul>
+<li>
+<p>"Probablity of A given B"</p>
+</li>
+<li>
+<p>Bが与えられた時、Aの確率
+<br></p>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>結合確率（joint Probability）</p>
+</blockquote>
+<ul>
+<li>
+<p>$P(A= true, B=true)$</p>
+<ul>
+<li>
+<p>"the probability of A=true <strong>and</strong> B=true"</p>
+</li>
+<li>
+<p>A=trueとB=trueが同時に満足できる確率</p>
+</li>
+<li>
+<p><strong>条件付き確率と結合確率の関係</strong>は一般に、$P(X|Y) =\cfrac{P(X,Y)}{P(Y)}$
+<br></p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>総確率法則（Law of Total Probability）</p>
+</blockquote>
+<ul>
+<li>
+<p>"Summing out" or "Marginalization"</p>
+</li>
+<li>
+<p>$P(A) = \sum_kP(A,B_k) = \sum_kP(A|B_k)P(B_k)$</p>
+<ul>
+<li>
+<p>$P(A) = \sum_kP(A,B_k)$は$B_1,B_2,...,B_n$がそれぞれ相互背反的な集合であり、これらの和集合が全体集合となるので成立（marginalize）</p>
+</li>
+<li>
+<p>$\sum_kP(A,B_k) = \sum_kP(A|B_k)P(B_k)$は条件付き確率と結合確率の関係を利用すると誘導可能
+<br></p>
+</li>
+</ul>
+</li>
+<li>
+<p>これによる利点は、$P(A)$を直接求めるより、$P(A|B_k)$のような条件付き確率を求めて合わせることが一般的により容易であることである。</p>
+</li>
+<li>
+<p>あるいは結合確率を知っている時、様々な確率が計算できる。</p>
+<ul>
+<li>
+<p>例えば、結合確率である$P(a,b,c,d)$を知っているとき、$P(c|b)$は以下のように表せる。</p>
+</li>
+<li>
+<p>$P(c|b) = \sum_a \sum_d P(a,c,d|b) = \cfrac{1}{P(b)}\sum_a \sum_d {\bf P(a,b,c,d)}$</p>
+</li>
+<li>
+<p>しかし、jointの場合にはparameterの数がexponentialに増えることになる！ （Chain Ruleの必要性）</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>確率の連鎖法則（Chain Rule for probability）</p>
+</blockquote>
+<ul>
+<li>
+<p>全てのjoint distribution について、結合確率と条件付き確率の関係により常に以下のように表せる。</p>
+</li>
+<li>
+<p>$P(a,b,c,...,z) = P(a|b,c,...,z)P(b,c,....,z)$</p>
+</li>
+<li>
+<p>これを繰り返すと、$P(a,b,c,...,z) = P(a|b,c,...,z)P(b|c,...,z)P(c|d,...,z)...P(z)$で表現可能（Factorization）</p>
+</li>
+</ul>
+<p><br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>乗分解法則（Rule of product decomposition）</p>
+</blockquote>
+<ul>
+<li>
+<p>Bayesian Networkでは、グラフに属するRVの結合分布（joint distribution）は、<code>family</code>のすべての条件付き分布$P(Child|Parent)$の乗$^{[*1]}$で表現できる。<br>
+<em>（次のポストのFactorization of Bayes Networkの内容を参照されたい）</em></p>
+</li>
+<li>
+<p>$P(x_1,x_2,...,x_n) = \prod _iP(x_i|Parents(x_i))$<br>
+<em>（Parentsは直接的に接続されて影響を受ける変数だけを意味）</em></p>
+<ul>
+<li>
+<p>例えば、$X\rightarrow Y\rightarrow Z$ のグラフで$P(X=x,Y=y,Z=z)$を求めることを考えてみよう</p>
+</li>
+<li>
+<p>本来は可能なすべての組み合わせの$(x, y, z)$に該当する確率テーブルを作らなければならない</p>
+</li>
+<li>
+<p>しかし、この法則を利用すると$P(X=x,Y=y,Z=z) = P(X=x)P(Y=y|X=x)P(Z=z|Y=y)$で簡潔に表現可能</p>
+</li>
+<li>
+<p>このように高次元を低次元にすることで<em>次元の呪い（curse of dimensionality）</em>からも比較的自由になることができる。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<p><span style="font-size:85%"> $^{[*1]}:$ このように表現可能な理由は、後述するベイジアンネットワークのTypical Local Structures Rules に関連している。</span></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="ベイジアンネットワークのRules-of-Typical-Local-Structures">
+<a class="anchor" href="#%E3%83%99%E3%82%A4%E3%82%B8%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AERules-of-Typical-Local-Structures" aria-hidden="true"><span class="octicon octicon-link"></span></a>ベイジアンネットワークのRules of Typical Local Structures<a class="anchor-link" href="#%E3%83%99%E3%82%A4%E3%82%B8%E3%82%A2%E3%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AERules-of-Typical-Local-Structures"> </a>
+</h2>
+<hr>
+<p><br></p>
+<blockquote>
+<p>Rule 1. 鎖または滝型（Chain or Cascading）</p>
+</blockquote>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/chain.png" alt=""></p>
+<ul>
+<li>
+<p>変数$X$と変数$Y$の間で一つの方向性経路だけがあって変数$Z$が当該経路を塞いでいるとき、<strong>$Z$が条件付きで与えられると、二つの変数$X$と$Y$は条件付き独立</strong> である。</p>
+</li>
+<li>
+<p>$X \perp Y|Z$
+  $\Leftrightarrow P(Y|X,Z) = P(Y|Z)$</p>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>Rule 2. 分岐あるいは共通の親型（Fork or Common parent）</p>
+</blockquote>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/fork.png" alt=""></p>
+<ul>
+<li>
+<p>変数$Z$が$X$と$Y$の共通原因で、$X$と$Y$の間にたった一つの経路があるとき、<strong>$Z$の条件が与えられると、$X$と$Y$は条件付き独立</strong> である。</p>
+</li>
+<li>
+<p>$X \perp Y|Z$
+  $\Leftrightarrow P(X,Y|Z) = P(X|Z)P(Y|Z)$</p>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>Rule 3.衝突部あるいはV-構造(Collider or V-structure)</p>
+</blockquote>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/colider.png" alt=""></p>
+<ul>
+<li>
+<p>変数$Z$が二つの変数$X$と$Y$の間の衝突ノードで、$X$と$Y$の間で<em>たった一つの経路</em>だけあるとき、<strong>$X$と$Y$は非条件付き独立（underconditionally independent）</strong> である。しかし、<strong>$Z$または$Z$の<code>descendant</code>を条件付きにした場合、$X$と$Y$は従属となる可能性</strong> がある。</p>
+</li>
+<li>
+<p>$\sim (X \perp Y|Z)$
+  $\Leftrightarrow P(X,Y,Z)=P(X)P(Y)P(Z|X,Y)$</p>
+</li>
+<li>
+<p>つまり$Z$が not given の時は独立だが、逆に$Z$がgivenで与えられれば$X$、$Y$が従属となる可能性が生じてしまう。</p>
+</li>
+</ul>
+<p><br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Bayes-Ball-Algorithm">
+<a class="anchor" href="#Bayes-Ball-Algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bayes Ball Algorithm<a class="anchor-link" href="#Bayes-Ball-Algorithm"> </a>
+</h2>
+<hr>
+<ul>
+<li>
+<p>目的：$X \perp Y | Z$（$Z$がgivenの場合、$X$と$Y$が独立）が成立するかどうかを判定するためのアルゴリズム</p>
+</li>
+<li>
+<p>$X$からボールが出発すると仮定した時、 $Y$までボールが到達するかを確認する方法</p>
+</li>
+<li>
+<p>ここでボールは<code>Information</code>を意味し、矢印はボールの動きを意味する。ノード間が直接的なedgeで結ばれていなくても、ボールが転がって到達できるなら<code>Indirect influence</code>が存在するため、2つの変数は<code>depedent</code>であることを意味する。</p>
+</li>
+</ul>
+<p><br></p>
+<blockquote>
+<p>Rule 1の場合</p>
+</blockquote>
+<p>(1) $Z$がgivenでない時、ボールは通ることができる。 ($X, Y$は従属)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule11.png" alt=""></p>
+<p>(2) $Z$が <strong>given</strong> の時、ボールは通れない。 ($X \perp Y|Z$)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule12.png" alt=""></p>
+<p><br></p>
+<blockquote>
+<p>Rule 2の場合</p>
+</blockquote>
+<p>(1) $Z$がgivenでない時、ボールは通ることができる。 ($X, Y$は従属)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule21.png" alt=""></p>
+<p>(2) $Z$が <strong>given</strong> の時、ボールは通れない。 ($X \perp Y|Z$)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule22.png" alt=""></p>
+<p><br></p>
+<blockquote>
+<p>Rule 3の場合</p>
+</blockquote>
+<p>(1) $Z$が <strong>givenでない時、ボールは通れない。</strong> ($\bf X \perp Y$)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule31.png" alt=""></p>
+<p>(2) $X_C$が<strong>given</strong>であるとき、逆にpathができてボールが通ることができるようになる。 ($X, Y$は<strong>従属</strong> $|Z$)</p>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/rule32.png" alt=""></p>
+<p><br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Bayes-Ball-Algorithmの例題">
+<a class="anchor" href="#Bayes-Ball-Algorithm%E3%81%AE%E4%BE%8B%E9%A1%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bayes Ball Algorithmの例題<a class="anchor-link" href="#Bayes-Ball-Algorithm%E3%81%AE%E4%BE%8B%E9%A1%8C"> </a>
+</h3>
+<p><img src="/jays_blog/images/copied_from_nb/notebook_images/exercise.png" alt=""></p>
+<p><br></p>
+<ul>
+<li>
+<p><strong>問題 1.</strong> $X_1\perp X_4|X_2$</p>
+<p>二つの経路でボールを転がすことができる。</p>
+<p>(1) $X_1 \rightarrow{\bf X_2} (given) \rightarrow X_4$の経路は$X_2$が鎖のgivenで塞がれているので通ることができない。</p>
+<p>(2) $X_1 \rightarrow X_3 \rightarrow X_5 \rightarrow X_6 \leftarrow{\bf X_2}(given) \rightarrow X_4$の経路は$X_6$が衝突部のnot givenで塞がれているので通ることができない。</p>
+<p>従って、いかなる経路でもボールは通れないので<strong>$X_2$がgivenのとき$X_1$と$X_4$は独立</strong> である。</p>
+</li>
+</ul>
+<p><br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<strong>問題 2.</strong> $X_2\perp X_5|X_1$</li>
+</ul>
+<p>二つの経路でボールを転がすことができる。</p>
+<p>(1) $X_2 \rightarrow X_6 \leftarrow X_5$ の経路は$X_6$が衝突部のnot givenで塞がれているので通れない。</p>
+<p>(2) $X_2 \leftarrow{\bf X_1}(given) \rightarrow X_3 \rightarrow X_5$の経路は$X_1$が分岐のdivenで塞がれているので通れない。</p>
+<p>従って、どんな経路でもボールは通れないので<strong>$X_1$がgivenのとき$X_2$と$X_5$は独立</strong> である。</p>
+<p><br></p>
+<ul>
+<li>
+<strong>問題 3.</strong> $X_1\perp X_6|\{X_2, X_3\} $</li>
+</ul>
+<p>二つの経路でボールを転がすことができる。</p>
+<p>(1) $X_1 \rightarrow{\bf X_2}(given) \rightarrow X_6$の経路は$X_2$が鎖のgivenで塞がれているので通ることができない。</p>
+<p>(2) $X_1 \rightarrow{\bf X_3}(given) \rightarrow X_5 \rightarrow X_6$の経路は$X_3$が鎖のgivenで塞がれているので通れない。</p>
+<p>従って、いかなる経路でもボールは通れないので、<strong>$\{X_2, X_3\}$がgivenのとき$X_1$と$X_6$は独立</strong> である。</p>
+<p><br></p>
+<ul>
+<li>
+<strong>問題 4.</strong> $X_2\perp X_3|\{X_1, X_6\} $</li>
+</ul>
+<p>二つの経路でボールを転がすことができる。</p>
+<p>(1) $X_2\leftarrow{\bf X_1}(given)\rightarrow X_3$ の経路は$X_1$が分岐のgivenで塞がれているので通れない。</p>
+<p>(2) $X_2 \rightarrow{\bf X_6}(given) \leftarrow X_5 \leftarrow X_3$の経路は$X_6$が衝突部のgivenで開いているので通ることができる。</p>
+<p>従って、二番目のパスでボールは通過できるので、<strong>$\{X_1, X_6\}$がgivenのとき$X_2$と$X_3$は独立が成立しない。</strong></p>
+<p><br></p>
+<hr>
+<h2 id="$d$-Seperationの定義">
+<a class="anchor" href="#%24d%24-Seperation%E3%81%AE%E5%AE%9A%E7%BE%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>$d$-Seperationの定義<a class="anchor-link" href="#%24d%24-Seperation%E3%81%AE%E5%AE%9A%E7%BE%A9"> </a>
+</h2>
+<hr>
+<ul>
+<li>
+<p>$d$は方向性（directly）を意味する。</p>
+</li>
+<li>
+<p>Bayesian Ball Algorithmで$d$-Seperationかどうかを確認することができる。</p>
+</li>
+<li>
+<p>整理すると、パスpが条件付き集合 $\{W\}$により$d$-Seperateされるという命題は以下と必要十分条件である。</p>
+<p>1.経路pは条件付き集合 $\{W\}$に属する中間ノード$Z$の鎖$X \rightarrow Z \rightarrow Y$または分岐$X \leftarrow Z \rightarrow Y$を含む。</p>
+<p>2.経路pは条件付き集合 $\{W\}$に属さない中間ノード$Z'$の衝突部$X \rightarrow Z' \leftarrow Y$を含む。</p>
+</li>
+</ul>
+<p><br></p>
+<hr>
+<h2 id="Additional-reference">
+<a class="anchor" href="#Additional-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional reference<a class="anchor-link" href="#Additional-reference"> </a>
+</h2>
+<p>[1] Judea Pearl, Madelyn Glymour, Nicholas P. Jewell (2016). <a href="http://bayes.cs.ucla.edu/PRIMER/">Causal Inference in Statistics: A Primer</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p><strong>このシリーズの別のポストを見るには</strong></p>
+<p>　　　<a href="https://jaysung00.github.io/jays_blog/datacamp/2021/02/09/Bayesian-Network-2.html">[Next &gt;&gt;]</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20c.%20causal%20inference%20___%20%3E%20bayesian%20network/2021/02/08/Bayesian-Network-1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
