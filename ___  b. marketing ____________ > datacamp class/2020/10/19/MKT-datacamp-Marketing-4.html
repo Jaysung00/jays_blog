@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Analyzing Marketing Campaigns with pandas ④ | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Analyzing Marketing Campaigns with pandas ④" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Analyzing Marketing Campaigns with pandas - ④A/B testing for marketing まとめ, via Datacamp" />
+<meta property="og:description" content="Analyzing Marketing Campaigns with pandas - ④A/B testing for marketing まとめ, via Datacamp" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20b.%20marketing%20____________%20%3E%20datacamp%20class/2020/10/19/MKT-datacamp-Marketing-4.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20b.%20marketing%20____________%20%3E%20datacamp%20class/2020/10/19/MKT-datacamp-Marketing-4.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:image" content="https://jaysung00.github.io/jays_blog/images/cam.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20b.%20marketing%20____________%20%3E%20datacamp%20class/2020/10/19/MKT-datacamp-Marketing-4.html","@type":"BlogPosting","headline":"Analyzing Marketing Campaigns with pandas ④","dateModified":"2020-10-19T00:00:00-05:00","datePublished":"2020-10-19T00:00:00-05:00","image":"https://jaysung00.github.io/jays_blog/images/cam.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20b.%20marketing%20____________%20%3E%20datacamp%20class/2020/10/19/MKT-datacamp-Marketing-4.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"Analyzing Marketing Campaigns with pandas - ④A/B testing for marketing まとめ, via Datacamp","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Analyzing Marketing Campaigns with pandas ④</h1><p class="page-description"><a href='https://learn.datacamp.com/courses/analyzing-marketing-campaigns-with-pandas'>Analyzing Marketing Campaigns with pandas - ④A/B testing for marketing</a> まとめ, via Datacamp</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-19T00:00:00-05:00" itemprop="datePublished">
+        Oct 19, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  B. MARKETING ____________ > Datacamp Class">___  B. MARKETING ____________ > Datacamp Class</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#A/Bテストとは">A/Bテストとは </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#A/Bテストを行う時の注意事項">A/Bテストを行う時の注意事項 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#テストの割り当て">テストの割り当て </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#PersonalizaitonグループとControlグループの転換率の平均計算">PersonalizaitonグループとControlグループの転換率の平均計算 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Lift値の計算">Lift値の計算 </a></li>
+<li class="toc-entry toc-h2"><a href="#A/Bテスト&セグメンテーション&T-test-関数">A/Bテスト&amp;セグメンテーション&amp;T-test 関数 </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-10-19-MKT-datacamp-Marketing-4.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="A/Bテストとは">
+<a class="anchor" href="#A/B%E3%83%86%E3%82%B9%E3%83%88%E3%81%A8%E3%81%AF" aria-hidden="true"><span class="octicon octicon-link"></span></a>A/Bテストとは<a class="anchor-link" href="#A/B%E3%83%86%E3%82%B9%E3%83%88%E3%81%A8%E3%81%AF"> </a>
+</h2>
+<ul>
+<li>どのバリアントのパフォーマンスが優れているかを評価するランダム化実験</li>
+</ul>
+<h3 id="A/Bテストを行う時の注意事項">
+<a class="anchor" href="#A/B%E3%83%86%E3%82%B9%E3%83%88%E3%82%92%E8%A1%8C%E3%81%86%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>A/Bテストを行う時の注意事項<a class="anchor-link" href="#A/B%E3%83%86%E3%82%B9%E3%83%88%E3%82%92%E8%A1%8C%E3%81%86%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"> </a>
+</h3>
+<ul>
+<li>明確なコントロールが必要</li>
+<li>テストを行う前にKPI（Key Performance Index）を設定</li>
+<li>ポジティブな結果を見つけようと、成功を再定義することは望ましくない</li>
+<li>KPIを事前に文書化することで、テストの成功を明確に保つことができる</li>
+</ul>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import &amp; read data</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">marketing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'./dataset/marketing.csv'</span><span class="p">,</span> 
+                    <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'date_served'</span><span class="p">,</span> <span class="s1">'date_subscribed'</span><span class="p">,</span> <span class="s1">'date_canceled'</span><span class="p">])</span>
+
+<span class="n">marketing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user_id</th>
+      <th>date_served</th>
+      <th>marketing_channel</th>
+      <th>variant</th>
+      <th>converted</th>
+      <th>language_displayed</th>
+      <th>language_preferred</th>
+      <th>age_group</th>
+      <th>date_subscribed</th>
+      <th>date_canceled</th>
+      <th>subscribing_channel</th>
+      <th>is_retained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a100000029</td>
+      <td>2018-01-01</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>0-18 years</td>
+      <td>2018-01-01</td>
+      <td>NaT</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>a100000030</td>
+      <td>2018-01-01</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>19-24 years</td>
+      <td>2018-01-01</td>
+      <td>NaT</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>a100000031</td>
+      <td>2018-01-01</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>24-30 years</td>
+      <td>2018-01-01</td>
+      <td>NaT</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>a100000032</td>
+      <td>2018-01-01</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>30-36 years</td>
+      <td>2018-01-01</td>
+      <td>NaT</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>a100000033</td>
+      <td>2018-01-01</td>
+      <td>House Ads</td>
+      <td>personalization</td>
+      <td>True</td>
+      <td>English</td>
+      <td>English</td>
+      <td>36-45 years</td>
+      <td>2018-01-01</td>
+      <td>NaT</td>
+      <td>House Ads</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="テストの割り当て">
+<a class="anchor" href="#%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6" aria-hidden="true"><span class="octicon octicon-link"></span></a>テストの割り当て<a class="anchor-link" href="#%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>このデータは実際A/Bテストが行われている。variant列がpersonlizationかcontrolかによって割り当てされている。</p>
+<p>以下のコードではmarketing_channelがEmailであるデータの中でA/Bテストの結果を分析する。</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="n">marketing</span><span class="p">[</span><span class="n">marketing</span><span class="p">[</span><span class="s1">'marketing_channel'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Email'</span><span class="p">]</span>
+
+<span class="c1"># Group the email DataFrame by variant </span>
+<span class="n">alloc</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'variant'</span><span class="p">])[</span><span class="s1">'user_id'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+
+<span class="c1"># Plot a bar chart of the test allocation</span>
+<span class="n">alloc</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">'bar'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Personalization test allocation'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'# participants'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="PersonalizaitonグループとControlグループの転換率の平均計算">
+<a class="anchor" href="#Personalizaiton%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%81%A8Control%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%81%AE%E8%BB%A2%E6%8F%9B%E7%8E%87%E3%81%AE%E5%B9%B3%E5%9D%87%E8%A8%88%E7%AE%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>PersonalizaitonグループとControlグループの転換率の平均計算<a class="anchor-link" href="#Personalizaiton%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%81%A8Control%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%81%AE%E8%BB%A2%E6%8F%9B%E7%8E%87%E3%81%AE%E5%B9%B3%E5%9D%87%E8%A8%88%E7%AE%97"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">subscribers</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'user_id'</span><span class="p">,</span> 
+                             <span class="s1">'variant'</span><span class="p">])[</span><span class="s1">'converted'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">subscribers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">subscribers</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> 
+
+<span class="c1"># Drop missing values from the control column</span>
+<span class="n">control</span> <span class="o">=</span> <span class="n">subscribers_df</span><span class="p">[</span><span class="s1">'control'</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Drop missing values from the personalization column</span>
+<span class="n">personalization</span> <span class="o">=</span> <span class="n">subscribers_df</span><span class="p">[</span><span class="s1">'personalization'</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Control conversion rate:'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">control</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Personalization conversion rate:'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">personalization</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Control conversion rate: 0.2814814814814815
+Personalization conversion rate: 0.3908450704225352
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lift値の計算">
+<a class="anchor" href="#Lift%E5%80%A4%E3%81%AE%E8%A8%88%E7%AE%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lift値の計算<a class="anchor-link" href="#Lift%E5%80%A4%E3%81%AE%E8%A8%88%E7%AE%97"> </a>
+</h2>
+<p>$Lift = \cfrac{Treatment\space conversion\space rate\space -\space Control\space conversion\space rate}{Control\space conversion\space rate}$</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Lift関数の定義</span>
+<span class="k">def</span> <span class="nf">lift</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">treat</span><span class="p">):</span>
+    <span class="c1"># Calcuate the mean of control and treatment</span>
+    <span class="n">control_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">control</span><span class="p">)</span>
+    <span class="n">treat_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">treat</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate the lift using control_mean and treat_mean</span>
+    <span class="n">lift</span> <span class="o">=</span> <span class="p">(</span><span class="n">treat_mean</span><span class="o">-</span><span class="n">control_mean</span><span class="p">)</span><span class="o">/</span><span class="n">control_mean</span>
+  
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">lift</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s1">'%'</span>
+  
+<span class="c1"># Print lift() with control and personalization as inputs</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lift</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">personalization</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>38.85%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A/Bテスト&amp;セグメンテーション&amp;T-test-関数">
+<a class="anchor" href="#A/B%E3%83%86%E3%82%B9%E3%83%88&amp;%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3&amp;T-test-%E9%96%A2%E6%95%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>A/Bテスト&amp;セグメンテーション&amp;T-test 関数<a class="anchor-link" href="#A/B%E3%83%86%E3%82%B9%E3%83%88&amp;%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3&amp;T-test-%E9%96%A2%E6%95%B0"> </a>
+</h2>
+<p>E-mailのマーケッティングの実績における別の特徴（セグメント）ごとにLift値＆T-test（統計的有意性）を計算する関数</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">ab_segmentation</span><span class="p">(</span><span class="n">segment</span><span class="p">):</span>
+  <span class="c1"># Build a for loop for each segment in marketing</span>
+  <span class="k">for</span> <span class="n">subsegment</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="n">segment</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">subsegment</span><span class="p">)</span>
+      
+      <span class="c1"># Limit marketing to email and subsegment      </span>
+      <span class="n">email</span> <span class="o">=</span> <span class="n">marketing</span><span class="p">[(</span><span class="n">marketing</span><span class="p">[</span><span class="s1">'marketing_channel'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Email'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">marketing</span><span class="p">[</span><span class="n">segment</span><span class="p">]</span> <span class="o">==</span> <span class="n">subsegment</span><span class="p">)]</span>
+
+      <span class="n">subscribers</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="s1">'variant'</span><span class="p">])[</span><span class="s1">'converted'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+      <span class="n">subscribers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">subscribers</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> 
+      <span class="n">control</span> <span class="o">=</span> <span class="n">subscribers</span><span class="p">[</span><span class="s1">'control'</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+      <span class="n">personalization</span> <span class="o">=</span> <span class="n">subscribers</span><span class="p">[</span><span class="s1">'personalization'</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="s1">'lift:'</span><span class="p">,</span> <span class="n">lift</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">personalization</span><span class="p">))</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">'t-statistic:'</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">personalization</span><span class="p">),</span> <span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ab_segmentation</span><span class="p">(</span><span class="s1">'language_displayed'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Arabic
+lift: 50.0%
+t-statistic: Ttest_indResult(statistic=-0.5773502691896255, pvalue=0.5795840000000001) 
+
+
+English
+lift: 39.0%
+t-statistic: Ttest_indResult(statistic=-2.2183598646203166, pvalue=0.026991701290720815) 
+
+
+German
+lift: -1.62%
+t-statistic: Ttest_indResult(statistic=0.1910083418078718, pvalue=0.8494394170062678) 
+
+
+Spanish
+lift: 166.67%
+t-statistic: Ttest_indResult(statistic=-2.3570226039551585, pvalue=0.040156718110477524) 
+
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ab_segmentation</span><span class="p">(</span><span class="s1">'age_group'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0-18 years
+lift: 121.4%
+t-statistic: Ttest_indResult(statistic=-2.966044912142211, pvalue=0.0038724494391297226) 
+
+
+19-24 years
+lift: 106.24%
+t-statistic: Ttest_indResult(statistic=-3.03179438478667, pvalue=0.0030623836114689134) 
+
+
+24-30 years
+lift: 161.19%
+t-statistic: Ttest_indResult(statistic=-3.861539544326876, pvalue=0.00018743381094867337) 
+
+
+30-36 years
+lift: -100.0%
+t-statistic: Ttest_indResult(statistic=3.1859064644147996, pvalue=0.0023238487431765137) 
+
+
+36-45 years
+lift: -85.23%
+t-statistic: Ttest_indResult(statistic=2.4317901279318503, pvalue=0.01797568600978829) 
+
+
+45-55 years
+lift: -72.22%
+t-statistic: Ttest_indResult(statistic=2.065499127317933, pvalue=0.043062339688201196) 
+
+
+55+ years
+lift: -100.0%
+t-statistic: Ttest_indResult(statistic=3.3265654564203397, pvalue=0.0016358623456360435) 
+
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p><strong>このシリーズの別のポストを見るには</strong></p>
+<p>　　　<a href="https://jaysung00.github.io/jays_blog/datacamp/2021/02/03/Marketing-3.html">[&lt;&lt;Prev]</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20b.%20marketing%20____________%20%3E%20datacamp%20class/2020/10/19/MKT-datacamp-Marketing-4.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
