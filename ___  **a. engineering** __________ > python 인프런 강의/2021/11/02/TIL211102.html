@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Today I Learned 211102 | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Today I Learned 211102" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A study record about Data Science" />
+<meta property="og:description" content="A study record about Data Science" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20**a.%20engineering**%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/02/TIL211102.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20**a.%20engineering**%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/02/TIL211102.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-02T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20**a.%20engineering**%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/02/TIL211102.html","@type":"BlogPosting","headline":"Today I Learned 211102","dateModified":"2021-11-02T00:00:00-05:00","datePublished":"2021-11-02T00:00:00-05:00","author":{"@type":"Person","name":"Jay Sung"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20**a.%20engineering**%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/02/TIL211102.html"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Today I Learned 211102</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-02T00:00:00-05:00" itemprop="datePublished">
+        Nov 2, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  **A. ENGINEERING** __________ > PYTHON 인프런 강의">___  **A. ENGINEERING** __________ > PYTHON 인프런 강의</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-02-TIL211102.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)">&#51064;&#54532;&#47088; &#54028;&#51060;&#50028; &#51473;&#44553; (Inflearn Original)<a class="anchor-link" href="#&#51064;&#54532;&#47088;-&#54028;&#51060;&#50028;-&#51473;&#44553;-(Inflearn-Original)"> </a></h2><p>매직 메소드(3-1, 3-2, 3-3)</p>
+<hr />
+<h4 id="&#45936;&#51060;&#53552;-&#47784;&#45944;(Data-Model)">&#45936;&#51060;&#53552; &#47784;&#45944;(Data Model)<a class="anchor-link" href="#&#45936;&#51060;&#53552;-&#47784;&#45944;(Data-Model)"> </a></h4><p>참조 : <a href="https://docs.python.org/3/reference/datamodel.html">https://docs.python.org/3/reference/datamodel.html</a></p>
+<p>-&gt; Namedtuple 실습</p>
+<hr />
+<h4 id="&#44061;&#52404;--&gt;-&#54028;&#51060;&#50028;&#51032;-&#45936;&#51060;&#53552;&#47484;-&#52628;&#49345;&#54868;">&#44061;&#52404; -&gt; &#54028;&#51060;&#50028;&#51032; &#45936;&#51060;&#53552;&#47484; &#52628;&#49345;&#54868;<a class="anchor-link" href="#&#44061;&#52404;--&gt;-&#54028;&#51060;&#50028;&#51032;-&#45936;&#51060;&#53552;&#47484;-&#52628;&#49345;&#54868;"> </a></h4><h4 id="&#47784;&#46304;-&#44061;&#52404;--&gt;-id,-type--&gt;-value">&#47784;&#46304; &#44061;&#52404; -&gt; id, type -&gt; value<a class="anchor-link" href="#&#47784;&#46304;-&#44061;&#52404;--&gt;-id,-type--&gt;-value"> </a></h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 일반적인 튜플 사용해서 두 점 사이의 거리 구하기</span>
+<span class="n">pt1</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+<span class="n">pt2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<span class="n">l_leng1</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">pt1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">pt2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">pt1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">pt2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer is&quot;</span><span class="p">,</span> <span class="n">l_leng1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Answer is 3.8078865529319543
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h2 id="&#45348;&#51076;&#46300;-&#53916;&#54540;&#51060;&#46976;?">&#45348;&#51076;&#46300; &#53916;&#54540;&#51060;&#46976;?<a class="anchor-link" href="#&#45348;&#51076;&#46300;-&#53916;&#54540;&#51060;&#46976;?"> </a></h2><p>네임드튜플은 일반 튜플이 인덱스로 접근하는 것에 비해 이름으로 접근이 가능한 튜플을 말한다.</p>
+<p>공식 레퍼런스에서는 객체를 사용하는 것보다 튜플 활용을 추천하고 있다.
+네임드 튜플이 유용한 이유는 다음과 같다.</p>
+<ul>
+<li>튜플의 기본 성질인 불변 객체</li>
+<li>일반 객체 형태보다 적은 메모리 사용</li>
+<li>다양한 접근법 지원</li>
+<li>Dictionary key와 같이 사용</li>
+</ul>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 네임드 튜플 사용해서 두 점 사이의 거리 구하기</span>
+
+<span class="c1"># import</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="c1"># 네임드 튜플 선언</span>
+<span class="c1"># 1번째 인자 - namedtuple name</span>
+<span class="c1"># 2번째 인자 - field names</span>
+<span class="n">Point</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="s1">&#39;x y&#39;</span><span class="p">)</span>  <span class="c1"># -&gt; x,y가 key가 되는 튜플 (더욱 명시적이다)</span>
+
+<span class="n">pt3</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+<span class="n">pt4</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pt3</span><span class="p">,</span> <span class="n">pt4</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pt3</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># key로 참조</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pt4</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 기존 튜플 처럼 index로 참조하는 것도 물론 가능하나, 실수할 수 있으므로 key가 나음</span>
+
+<span class="n">l_leng2</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">pt3</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">pt4</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">pt3</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">pt4</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer is&quot;</span><span class="p">,</span> <span class="n">l_leng2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Point(x=1.0, y=5.0)
+Point(x=2.5, y=1.5)
+1.0
+1.5
+Answer is 3.8078865529319543
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 네임드튜플의 여러가지 선언 방법</span>
+<span class="n">Point1</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+<span class="n">Point2</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="s1">&#39;x, y&#39;</span><span class="p">)</span>
+<span class="n">Point3</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="s1">&#39;x y&#39;</span><span class="p">)</span>
+<span class="n">Point4</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="s1">&#39;x y x class&#39;</span><span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">## 중복된 키값 혹은 예약어같이 가질수 없는 키가 올 경우에는 rename=Ture 옵션이 필요하다</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Point1</span><span class="p">,</span> <span class="n">Point2</span><span class="p">,</span> <span class="n">Point3</span><span class="p">,</span> <span class="n">Point4</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;__main__.Point&#39;&gt; &lt;class &#39;__main__.Point&#39;&gt; &lt;class &#39;__main__.Point&#39;&gt; &lt;class &#39;__main__.Point&#39;&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dict to Unpacking 딕셔너리로 받은 것을 네임도 튜플로 변환</span>
+<span class="n">temp_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 객체생성</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">Point1</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">p3</span> <span class="o">=</span> <span class="n">Point3</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">p4</span> <span class="o">=</span> <span class="n">Point4</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">p5</span> <span class="o">=</span> <span class="n">Point1</span><span class="p">(</span><span class="o">**</span><span class="n">temp_dict</span><span class="p">)</span> <span class="c1">## Unpacking</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p4</span><span class="p">)</span> <span class="c1">## 알아서 rename해서 레이블 생성해줌</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Point(x=10, y=35)
+Point(x=20, y=40)
+Point(x=45, y=20)
+Point(x=10, y=20, _2=30, _3=40)
+Point(x=75, y=55)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 사용</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">p2</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">p3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>50
+50
+45 20
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 네임드 튜플 메소드</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">52</span><span class="p">,</span> <span class="mi">38</span><span class="p">]</span>
+
+<span class="c1"># _make() : 새로운 객체 생성</span>
+<span class="n">p4</span> <span class="o">=</span> <span class="n">Point1</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">p4</span><span class="p">)</span>
+
+
+<span class="c1"># _fields : 필드 네임확인</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">p2</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">p3</span><span class="o">.</span><span class="n">_fields</span><span class="p">)</span>
+
+
+<span class="c1"># _asdict() : OrderedDict 반환</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">_asdict</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Point(x=52, y=38)
+(&#39;x&#39;, &#39;y&#39;) (&#39;x&#39;, &#39;y&#39;) (&#39;x&#39;, &#39;y&#39;)
+OrderedDict([(&#39;x&#39;, 10), (&#39;y&#39;, 35)])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 실 사용 실습</span>
+<span class="c1"># 긱 반에 20명이 있고, 4개의 반이 있다 (A1~20, B1~20, C1~20, D1~20)</span>
+
+<span class="n">Classes</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Classes&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;10&#39;, &#39;11&#39;, &#39;12&#39;, &#39;13&#39;, &#39;14&#39;, &#39;15&#39;, &#39;16&#39;, &#39;17&#39;, &#39;18&#39;, &#39;19&#39;, &#39;20&#39;]
+[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h2 id="List-Comprehension-&#51060;&#46976;?">List Comprehension &#51060;&#46976;?<a class="anchor-link" href="#List-Comprehension-&#51060;&#46976;?"> </a></h2><p>리스트를 쉽게, 짧게 한 줄로 만들 수 있는 파이썬의 문법</p>
+<hr />
+<h4 id="[-(&#48320;&#49688;&#47484;-&#54876;&#50857;&#54620;-&#44050;)-for-(&#49324;&#50857;&#54624;-&#48320;&#49688;-&#51060;&#47492;)-in-(&#49692;&#54924;&#54624;-&#49688;-&#51080;&#45716;-&#44050;)-{if-(&#51312;&#44148;&#47928;)}]">[ (&#48320;&#49688;&#47484; &#54876;&#50857;&#54620; &#44050;) for (&#49324;&#50857;&#54624; &#48320;&#49688; &#51060;&#47492;) in (&#49692;&#54924;&#54624; &#49688; &#51080;&#45716; &#44050;) {if (&#51312;&#44148;&#47928;)}]<a class="anchor-link" href="#[-(&#48320;&#49688;&#47484;-&#54876;&#50857;&#54620;-&#44050;)-for-(&#49324;&#50857;&#54624;-&#48320;&#49688;-&#51060;&#47492;)-in-(&#49692;&#54924;&#54624;-&#49688;-&#51080;&#45716;-&#44050;)-{if-(&#51312;&#44148;&#47928;)}]"> </a></h4><p>{}은 생략가능.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 그룹 리스트 선언</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)]</span>
+<span class="n">ranks</span> <span class="o">=</span> <span class="s1">&#39;A B C D&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ranks</span><span class="p">)</span>
+
+<span class="c1"># List Comprehension</span>
+<span class="n">students</span> <span class="o">=</span> <span class="p">[</span><span class="n">Classes</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">ranks</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">students</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">students</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;10&#39;, &#39;11&#39;, &#39;12&#39;, &#39;13&#39;, &#39;14&#39;, &#39;15&#39;, &#39;16&#39;, &#39;17&#39;, &#39;18&#39;, &#39;19&#39;, &#39;20&#39;]
+[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;]
+80
+[Classes(rank=&#39;A&#39;, number=&#39;1&#39;), Classes(rank=&#39;A&#39;, number=&#39;2&#39;), Classes(rank=&#39;A&#39;, number=&#39;3&#39;), Classes(rank=&#39;A&#39;, number=&#39;4&#39;), Classes(rank=&#39;A&#39;, number=&#39;5&#39;), Classes(rank=&#39;A&#39;, number=&#39;6&#39;), Classes(rank=&#39;A&#39;, number=&#39;7&#39;), Classes(rank=&#39;A&#39;, number=&#39;8&#39;), Classes(rank=&#39;A&#39;, number=&#39;9&#39;), Classes(rank=&#39;A&#39;, number=&#39;10&#39;), Classes(rank=&#39;A&#39;, number=&#39;11&#39;), Classes(rank=&#39;A&#39;, number=&#39;12&#39;), Classes(rank=&#39;A&#39;, number=&#39;13&#39;), Classes(rank=&#39;A&#39;, number=&#39;14&#39;), Classes(rank=&#39;A&#39;, number=&#39;15&#39;), Classes(rank=&#39;A&#39;, number=&#39;16&#39;), Classes(rank=&#39;A&#39;, number=&#39;17&#39;), Classes(rank=&#39;A&#39;, number=&#39;18&#39;), Classes(rank=&#39;A&#39;, number=&#39;19&#39;), Classes(rank=&#39;A&#39;, number=&#39;20&#39;), Classes(rank=&#39;B&#39;, number=&#39;1&#39;), Classes(rank=&#39;B&#39;, number=&#39;2&#39;), Classes(rank=&#39;B&#39;, number=&#39;3&#39;), Classes(rank=&#39;B&#39;, number=&#39;4&#39;), Classes(rank=&#39;B&#39;, number=&#39;5&#39;), Classes(rank=&#39;B&#39;, number=&#39;6&#39;), Classes(rank=&#39;B&#39;, number=&#39;7&#39;), Classes(rank=&#39;B&#39;, number=&#39;8&#39;), Classes(rank=&#39;B&#39;, number=&#39;9&#39;), Classes(rank=&#39;B&#39;, number=&#39;10&#39;), Classes(rank=&#39;B&#39;, number=&#39;11&#39;), Classes(rank=&#39;B&#39;, number=&#39;12&#39;), Classes(rank=&#39;B&#39;, number=&#39;13&#39;), Classes(rank=&#39;B&#39;, number=&#39;14&#39;), Classes(rank=&#39;B&#39;, number=&#39;15&#39;), Classes(rank=&#39;B&#39;, number=&#39;16&#39;), Classes(rank=&#39;B&#39;, number=&#39;17&#39;), Classes(rank=&#39;B&#39;, number=&#39;18&#39;), Classes(rank=&#39;B&#39;, number=&#39;19&#39;), Classes(rank=&#39;B&#39;, number=&#39;20&#39;), Classes(rank=&#39;C&#39;, number=&#39;1&#39;), Classes(rank=&#39;C&#39;, number=&#39;2&#39;), Classes(rank=&#39;C&#39;, number=&#39;3&#39;), Classes(rank=&#39;C&#39;, number=&#39;4&#39;), Classes(rank=&#39;C&#39;, number=&#39;5&#39;), Classes(rank=&#39;C&#39;, number=&#39;6&#39;), Classes(rank=&#39;C&#39;, number=&#39;7&#39;), Classes(rank=&#39;C&#39;, number=&#39;8&#39;), Classes(rank=&#39;C&#39;, number=&#39;9&#39;), Classes(rank=&#39;C&#39;, number=&#39;10&#39;), Classes(rank=&#39;C&#39;, number=&#39;11&#39;), Classes(rank=&#39;C&#39;, number=&#39;12&#39;), Classes(rank=&#39;C&#39;, number=&#39;13&#39;), Classes(rank=&#39;C&#39;, number=&#39;14&#39;), Classes(rank=&#39;C&#39;, number=&#39;15&#39;), Classes(rank=&#39;C&#39;, number=&#39;16&#39;), Classes(rank=&#39;C&#39;, number=&#39;17&#39;), Classes(rank=&#39;C&#39;, number=&#39;18&#39;), Classes(rank=&#39;C&#39;, number=&#39;19&#39;), Classes(rank=&#39;C&#39;, number=&#39;20&#39;), Classes(rank=&#39;D&#39;, number=&#39;1&#39;), Classes(rank=&#39;D&#39;, number=&#39;2&#39;), Classes(rank=&#39;D&#39;, number=&#39;3&#39;), Classes(rank=&#39;D&#39;, number=&#39;4&#39;), Classes(rank=&#39;D&#39;, number=&#39;5&#39;), Classes(rank=&#39;D&#39;, number=&#39;6&#39;), Classes(rank=&#39;D&#39;, number=&#39;7&#39;), Classes(rank=&#39;D&#39;, number=&#39;8&#39;), Classes(rank=&#39;D&#39;, number=&#39;9&#39;), Classes(rank=&#39;D&#39;, number=&#39;10&#39;), Classes(rank=&#39;D&#39;, number=&#39;11&#39;), Classes(rank=&#39;D&#39;, number=&#39;12&#39;), Classes(rank=&#39;D&#39;, number=&#39;13&#39;), Classes(rank=&#39;D&#39;, number=&#39;14&#39;), Classes(rank=&#39;D&#39;, number=&#39;15&#39;), Classes(rank=&#39;D&#39;, number=&#39;16&#39;), Classes(rank=&#39;D&#39;, number=&#39;17&#39;), Classes(rank=&#39;D&#39;, number=&#39;18&#39;), Classes(rank=&#39;D&#39;, number=&#39;19&#39;), Classes(rank=&#39;D&#39;, number=&#39;20&#39;)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 추천방식</span>
+<span class="n">students2</span> <span class="o">=</span> <span class="p">[</span><span class="n">Classes</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="s1">&#39;A B C D&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+				<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+					<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)]]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">students2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Classes(rank=&#39;A&#39;, number=&#39;1&#39;), Classes(rank=&#39;A&#39;, number=&#39;2&#39;), Classes(rank=&#39;A&#39;, number=&#39;3&#39;), Classes(rank=&#39;A&#39;, number=&#39;4&#39;), Classes(rank=&#39;A&#39;, number=&#39;5&#39;), Classes(rank=&#39;A&#39;, number=&#39;6&#39;), Classes(rank=&#39;A&#39;, number=&#39;7&#39;), Classes(rank=&#39;A&#39;, number=&#39;8&#39;), Classes(rank=&#39;A&#39;, number=&#39;9&#39;), Classes(rank=&#39;A&#39;, number=&#39;10&#39;), Classes(rank=&#39;A&#39;, number=&#39;11&#39;), Classes(rank=&#39;A&#39;, number=&#39;12&#39;), Classes(rank=&#39;A&#39;, number=&#39;13&#39;), Classes(rank=&#39;A&#39;, number=&#39;14&#39;), Classes(rank=&#39;A&#39;, number=&#39;15&#39;), Classes(rank=&#39;A&#39;, number=&#39;16&#39;), Classes(rank=&#39;A&#39;, number=&#39;17&#39;), Classes(rank=&#39;A&#39;, number=&#39;18&#39;), Classes(rank=&#39;A&#39;, number=&#39;19&#39;), Classes(rank=&#39;A&#39;, number=&#39;20&#39;), Classes(rank=&#39;B&#39;, number=&#39;1&#39;), Classes(rank=&#39;B&#39;, number=&#39;2&#39;), Classes(rank=&#39;B&#39;, number=&#39;3&#39;), Classes(rank=&#39;B&#39;, number=&#39;4&#39;), Classes(rank=&#39;B&#39;, number=&#39;5&#39;), Classes(rank=&#39;B&#39;, number=&#39;6&#39;), Classes(rank=&#39;B&#39;, number=&#39;7&#39;), Classes(rank=&#39;B&#39;, number=&#39;8&#39;), Classes(rank=&#39;B&#39;, number=&#39;9&#39;), Classes(rank=&#39;B&#39;, number=&#39;10&#39;), Classes(rank=&#39;B&#39;, number=&#39;11&#39;), Classes(rank=&#39;B&#39;, number=&#39;12&#39;), Classes(rank=&#39;B&#39;, number=&#39;13&#39;), Classes(rank=&#39;B&#39;, number=&#39;14&#39;), Classes(rank=&#39;B&#39;, number=&#39;15&#39;), Classes(rank=&#39;B&#39;, number=&#39;16&#39;), Classes(rank=&#39;B&#39;, number=&#39;17&#39;), Classes(rank=&#39;B&#39;, number=&#39;18&#39;), Classes(rank=&#39;B&#39;, number=&#39;19&#39;), Classes(rank=&#39;B&#39;, number=&#39;20&#39;), Classes(rank=&#39;C&#39;, number=&#39;1&#39;), Classes(rank=&#39;C&#39;, number=&#39;2&#39;), Classes(rank=&#39;C&#39;, number=&#39;3&#39;), Classes(rank=&#39;C&#39;, number=&#39;4&#39;), Classes(rank=&#39;C&#39;, number=&#39;5&#39;), Classes(rank=&#39;C&#39;, number=&#39;6&#39;), Classes(rank=&#39;C&#39;, number=&#39;7&#39;), Classes(rank=&#39;C&#39;, number=&#39;8&#39;), Classes(rank=&#39;C&#39;, number=&#39;9&#39;), Classes(rank=&#39;C&#39;, number=&#39;10&#39;), Classes(rank=&#39;C&#39;, number=&#39;11&#39;), Classes(rank=&#39;C&#39;, number=&#39;12&#39;), Classes(rank=&#39;C&#39;, number=&#39;13&#39;), Classes(rank=&#39;C&#39;, number=&#39;14&#39;), Classes(rank=&#39;C&#39;, number=&#39;15&#39;), Classes(rank=&#39;C&#39;, number=&#39;16&#39;), Classes(rank=&#39;C&#39;, number=&#39;17&#39;), Classes(rank=&#39;C&#39;, number=&#39;18&#39;), Classes(rank=&#39;C&#39;, number=&#39;19&#39;), Classes(rank=&#39;C&#39;, number=&#39;20&#39;), Classes(rank=&#39;D&#39;, number=&#39;1&#39;), Classes(rank=&#39;D&#39;, number=&#39;2&#39;), Classes(rank=&#39;D&#39;, number=&#39;3&#39;), Classes(rank=&#39;D&#39;, number=&#39;4&#39;), Classes(rank=&#39;D&#39;, number=&#39;5&#39;), Classes(rank=&#39;D&#39;, number=&#39;6&#39;), Classes(rank=&#39;D&#39;, number=&#39;7&#39;), Classes(rank=&#39;D&#39;, number=&#39;8&#39;), Classes(rank=&#39;D&#39;, number=&#39;9&#39;), Classes(rank=&#39;D&#39;, number=&#39;10&#39;), Classes(rank=&#39;D&#39;, number=&#39;11&#39;), Classes(rank=&#39;D&#39;, number=&#39;12&#39;), Classes(rank=&#39;D&#39;, number=&#39;13&#39;), Classes(rank=&#39;D&#39;, number=&#39;14&#39;), Classes(rank=&#39;D&#39;, number=&#39;15&#39;), Classes(rank=&#39;D&#39;, number=&#39;16&#39;), Classes(rank=&#39;D&#39;, number=&#39;17&#39;), Classes(rank=&#39;D&#39;, number=&#39;18&#39;), Classes(rank=&#39;D&#39;, number=&#39;19&#39;), Classes(rank=&#39;D&#39;, number=&#39;20&#39;)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 출력</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">students2</span><span class="p">:</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Classes(rank=&#39;A&#39;, number=&#39;1&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;2&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;3&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;4&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;5&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;6&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;7&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;8&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;9&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;10&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;11&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;12&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;13&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;14&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;15&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;16&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;17&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;18&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;19&#39;)
+Classes(rank=&#39;A&#39;, number=&#39;20&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;1&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;2&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;3&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;4&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;5&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;6&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;7&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;8&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;9&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;10&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;11&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;12&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;13&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;14&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;15&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;16&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;17&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;18&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;19&#39;)
+Classes(rank=&#39;B&#39;, number=&#39;20&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;1&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;2&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;3&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;4&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;5&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;6&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;7&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;8&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;9&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;10&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;11&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;12&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;13&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;14&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;15&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;16&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;17&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;18&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;19&#39;)
+Classes(rank=&#39;C&#39;, number=&#39;20&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;1&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;2&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;3&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;4&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;5&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;6&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;7&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;8&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;9&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;10&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;11&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;12&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;13&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;14&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;15&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;16&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;17&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;18&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;19&#39;)
+Classes(rank=&#39;D&#39;, number=&#39;20&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20**a.%20engineering**%20__________%20%3E%20python%20%EC%9D%B8%ED%94%84%EB%9F%B0%20%EA%B0%95%EC%9D%98/2021/11/02/TIL211102.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
