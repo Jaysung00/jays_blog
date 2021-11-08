@@ -102,7 +102,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      1 min read
     
 </span></p>
 
@@ -145,7 +145,7 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 내 시도</span>
 
 
-<span class="n">orders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ABCFG&quot;</span><span class="p">,</span> <span class="s2">&quot;AC&quot;</span><span class="p">,</span> <span class="s2">&quot;CDE&quot;</span><span class="p">,</span> <span class="s2">&quot;ACDE&quot;</span><span class="p">,</span> <span class="s2">&quot;BCFG&quot;</span><span class="p">,</span> <span class="s2">&quot;ACDEH&quot;</span><span class="p">]</span>
+<span class="n">orders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;XYZ&quot;</span><span class="p">,</span> <span class="s2">&quot;XWY&quot;</span><span class="p">,</span> <span class="s2">&quot;WXA&quot;</span><span class="p">]</span>
 <span class="n">course</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
@@ -153,27 +153,33 @@ window.onload = wrap_img;
 
 <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
 	<span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">sol</span> <span class="o">=</span> <span class="p">[]</span>
 	<span class="n">dic</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+	<span class="n">max_dic</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
+	<span class="c1"># 모든 조합 별 등장 횟수 계산   =&gt; Counter로 처리할 수 있다.</span>
 	<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">course</span><span class="p">:</span>
 		<span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span><span class="p">:</span>
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">n</span><span class="p">)):</span>
-				<span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1">#모든 갯수를 구하지 않아도, 2이상이면 그만 구해도 될텐데....</span>
+				<span class="n">dic</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">i</span><span class="p">))]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-	<span class="c1"># for k in dic:</span>
-	<span class="c1"># 	for c in range(2, len(k)):</span>
-	<span class="c1"># 		for i in list(combinations(list(k), c)):</span>
-	<span class="c1"># 			dic[i] = 0</span>
-	<span class="nb">print</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+	<span class="c1"># 코스 개수별 최대값 구하기 =&gt; Counter의 most_common() 메서드로 처리</span>
+	<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">max_dic</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)]</span> <span class="o">&lt;</span> <span class="n">dic</span><span class="p">[</span><span class="n">p</span><span class="p">]:</span>
+			<span class="n">max_dic</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)]</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
 
+	<span class="c1"># 코스 개수별 최대값을 가진 코스만 answer에 넘기기</span>
+	<span class="n">answer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">max_dic</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)]),</span> <span class="n">dic</span><span class="p">))</span>
 
-	<span class="n">course_menu</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">dic</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dic</span><span class="p">))</span>
-
-	<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">course</span><span class="p">:</span>
-		<span class="n">answer</span> <span class="o">+=</span> <span class="p">[</span><span class="n">menu</span> <span class="k">for</span> <span class="n">menu</span> <span class="ow">in</span> <span class="n">course_menu</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">]</span>
+	<span class="c1"># str으로 만들기</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">answer</span><span class="p">:</span>
+		<span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+		<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)):</span>
+			<span class="n">word</span> <span class="o">+=</span> <span class="n">i</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+		<span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 	
-	<span class="n">answer</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-	<span class="k">return</span> <span class="n">answer</span>
+	<span class="n">sol</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+	<span class="k">return</span> <span class="n">sol</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">course</span><span class="p">))</span>
 </pre></div>
@@ -188,8 +194,7 @@ window.onload = wrap_img;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>defaultdict(&lt;class &#39;int&#39;&gt;, {(&#39;A&#39;, &#39;B&#39;): 1, (&#39;A&#39;, &#39;C&#39;): 4, (&#39;A&#39;, &#39;F&#39;): 1, (&#39;A&#39;, &#39;G&#39;): 1, (&#39;B&#39;, &#39;C&#39;): 2, (&#39;B&#39;, &#39;F&#39;): 2, (&#39;B&#39;, &#39;G&#39;): 2, (&#39;C&#39;, &#39;F&#39;): 2, (&#39;C&#39;, &#39;G&#39;): 2, (&#39;F&#39;, &#39;G&#39;): 2, (&#39;C&#39;, &#39;D&#39;): 3, (&#39;C&#39;, &#39;E&#39;): 3, (&#39;D&#39;, &#39;E&#39;): 3, (&#39;A&#39;, &#39;D&#39;): 2, (&#39;A&#39;, &#39;E&#39;): 2, (&#39;A&#39;, &#39;H&#39;): 1, (&#39;C&#39;, &#39;H&#39;): 1, (&#39;D&#39;, &#39;H&#39;): 1, (&#39;E&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;F&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;G&#39;): 1, (&#39;A&#39;, &#39;C&#39;, &#39;F&#39;): 1, (&#39;A&#39;, &#39;C&#39;, &#39;G&#39;): 1, (&#39;A&#39;, &#39;F&#39;, &#39;G&#39;): 1, (&#39;B&#39;, &#39;C&#39;, &#39;F&#39;): 2, (&#39;B&#39;, &#39;C&#39;, &#39;G&#39;): 2, (&#39;B&#39;, &#39;F&#39;, &#39;G&#39;): 2, (&#39;C&#39;, &#39;F&#39;, &#39;G&#39;): 2, (&#39;C&#39;, &#39;D&#39;, &#39;E&#39;): 3, (&#39;A&#39;, &#39;C&#39;, &#39;D&#39;): 2, (&#39;A&#39;, &#39;C&#39;, &#39;E&#39;): 2, (&#39;A&#39;, &#39;D&#39;, &#39;E&#39;): 2, (&#39;A&#39;, &#39;C&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;D&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;E&#39;, &#39;H&#39;): 1, (&#39;C&#39;, &#39;D&#39;, &#39;H&#39;): 1, (&#39;C&#39;, &#39;E&#39;, &#39;H&#39;): 1, (&#39;D&#39;, &#39;E&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;F&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;G&#39;): 1, (&#39;A&#39;, &#39;B&#39;, &#39;F&#39;, &#39;G&#39;): 1, (&#39;A&#39;, &#39;C&#39;, &#39;F&#39;, &#39;G&#39;): 1, (&#39;B&#39;, &#39;C&#39;, &#39;F&#39;, &#39;G&#39;): 2, (&#39;A&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;): 2, (&#39;A&#39;, &#39;C&#39;, &#39;D&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;C&#39;, &#39;E&#39;, &#39;H&#39;): 1, (&#39;A&#39;, &#39;D&#39;, &#39;E&#39;, &#39;H&#39;): 1, (&#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;H&#39;): 1})
-[(&#39;A&#39;, &#39;C&#39;), (&#39;A&#39;, &#39;C&#39;, &#39;D&#39;), (&#39;A&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;), (&#39;A&#39;, &#39;C&#39;, &#39;E&#39;), (&#39;A&#39;, &#39;D&#39;), (&#39;A&#39;, &#39;D&#39;, &#39;E&#39;), (&#39;A&#39;, &#39;E&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;C&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;C&#39;, &#39;F&#39;, &#39;G&#39;), (&#39;B&#39;, &#39;C&#39;, &#39;G&#39;), (&#39;B&#39;, &#39;F&#39;), (&#39;B&#39;, &#39;F&#39;, &#39;G&#39;), (&#39;B&#39;, &#39;G&#39;), (&#39;C&#39;, &#39;D&#39;), (&#39;C&#39;, &#39;D&#39;, &#39;E&#39;), (&#39;C&#39;, &#39;E&#39;), (&#39;C&#39;, &#39;F&#39;), (&#39;C&#39;, &#39;F&#39;, &#39;G&#39;), (&#39;C&#39;, &#39;G&#39;), (&#39;D&#39;, &#39;E&#39;), (&#39;F&#39;, &#39;G&#39;)]
+<pre>[&#39;WX&#39;, &#39;XY&#39;]
 </pre>
 </div>
 </div>
@@ -207,48 +212,67 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
-	<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 다른사람 풀이</span>
 
-<span class="c1"># 평가 1 ; 기본적으로 같은 방법임. not(list)를 활용해서 빈 리스트 일 경우 0 (false)를 활용한 리턴값</span>
+<span class="c1"># 평가 1 ; collections.Counter을 사용해서 보다 편리</span>
+<span class="c1"># 평가 2 ; Pythonic 하다.</span>
 
-<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-	<span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
-	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
-		<span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">answer</span><span class="p">):</span>
-			<span class="n">answer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">if</span><span class="p">(</span><span class="n">answer</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">):</span>
-				<span class="n">answer</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-			<span class="k">else</span><span class="p">:</span>
-				<span class="n">answer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-	<span class="k">return</span> <span class="ow">not</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+<span class="n">orders2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;XYZ&quot;</span><span class="p">,</span> <span class="s2">&quot;XWY&quot;</span><span class="p">,</span> <span class="s2">&quot;WXA&quot;</span><span class="p">]</span>
+<span class="n">course2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+	<span class="k">for</span> <span class="n">course_size</span> <span class="ow">in</span> <span class="n">course</span><span class="p">:</span>
+		<span class="n">order_combinations</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span><span class="p">:</span>
+			<span class="n">order_combinations</span> <span class="o">+=</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">order</span><span class="p">),</span> <span class="n">course_size</span><span class="p">)</span>
+
+		<span class="n">most_ordered</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">order_combinations</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+		<span class="c1">## 코스 메뉴 개수별로 리스트 별도 작성해서 Counter.most_common()으로 요소를 세어, 최빈값 n개를 반환</span>
+
+		<span class="n">result</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">most_ordered</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">==</span> <span class="n">most_ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+		<span class="c1">## 최댓값과 같은 놈들만 남기기</span>
+	<span class="k">return</span> <span class="p">[</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">]</span> 
+	<span class="c1"># 1. 리스트를 정렬시키고, 2. 거기서 하나씩 for문 돌려서 3.&#39;&#39;.join(v)으로 str화 한다.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">orders2</span><span class="p">,</span> <span class="n">course2</span><span class="p">))</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;WX&#39;, &#39;XY&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h2 id="''.join()&#51008;-iterable&#51012;-str&#54868;-&#54644;&#51456;&#45796;.">''.join()&#51008; iterable&#51012; str&#54868; &#54644;&#51456;&#45796;.<a class="anchor-link" href="#''.join()&#51008;-iterable&#51012;-str&#54868;-&#54644;&#51456;&#45796;."> </a></h2><p><code>list1 = ['H', 'e', 'l', 'l', 'o']</code></p>
+<p><code>print(''.join(list1))</code></p>
+<p>[Output] Hello</p>
+</blockquote>
+
+</div>
+</div>
+</div>
 </div>
 
 
