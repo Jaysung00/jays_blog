@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Fastcampus 파이썬 전처리 - 1-2. 파이썬 주요 데이터 구조 | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Fastcampus 파이썬 전처리 - 1-2. 파이썬 주요 데이터 구조" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A study record about Data Science" />
+<meta property="og:description" content="A study record about Data Science" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20pre-processing/2021/11/11/ML-preprocessing1-2.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20pre-processing/2021/11/11/ML-preprocessing1-2.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-11T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20pre-processing/2021/11/11/ML-preprocessing1-2.html","@type":"BlogPosting","headline":"Fastcampus 파이썬 전처리 - 1-2. 파이썬 주요 데이터 구조","dateModified":"2021-11-11T00:00:00-06:00","datePublished":"2021-11-11T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20pre-processing/2021/11/11/ML-preprocessing1-2.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Fastcampus 파이썬 전처리 - 1-2. 파이썬 주요 데이터 구조</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-11T00:00:00-06:00" itemprop="datePublished">
+        Nov 11, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  B. MACHINE LEARNING ___ > Pre-processing">___  B. MACHINE LEARNING ___ > Pre-processing</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#리스트와-튜플">리스트와 튜플 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#리스트-관련-함수">리스트 관련 함수 </a></li>
+<li class="toc-entry toc-h2"><a href="#튜플-관련-함수">튜플 관련 함수 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#사전">사전 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#사전-관련-함수">사전 관련 함수 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#반복문과-comprehension">반복문과 comprehension </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#대표적인-이터레이터-객체-생성-함수-:-itertools-모듈-함수">대표적인 이터레이터 객체 생성 함수 : itertools 모듈 함수 </a></li>
+<li class="toc-entry toc-h2"><a href="#Comprehension">Comprehension </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Numpy의-데이터-구조">Numpy의 데이터 구조 </a></li>
+<li class="toc-entry toc-h1"><a href="#Pandas의-데이터-구조">Pandas의 데이터 구조 </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-11-ML-preprocessing1-2.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="리스트와-튜플">
+<a class="anchor" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>리스트와 튜플<a class="anchor-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-%ED%8A%9C%ED%94%8C"> </a>
+</h1>
+<p><em>[공통점]</em></p>
+<ul>
+<li>인덱싱과 슬라이싱 가능</li>
+<li>iterable</li>
+</ul>
+<p><em>[차이점]</em></p>
+<ul>
+<li>
+<strong>리스트는 가변, 튜플은 불변</strong> 이므로 리스트는 사전의 key로 사용할 수 없고 튜플은 가능하다. </li>
+<li>순회 속도는 리스트보다 <strong>튜플이 약간 더 빠르다</strong> (따라서 요소 변경이 필요없는 경우 튜플이 적합)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="리스트-관련-함수">
+<a class="anchor" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>리스트 관련 함수<a class="anchor-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="c1">## 요소 추가</span>
+<span class="c1"># .append(x) =&gt; 새로운 요소x를 맨 뒤에 추가</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+
+<span class="c1"># .insert(a, x) =&gt; 새로운 요소 x를 a 위치에 추가 (기존의 요소는 뒤로 밀림)</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[5, 6, 7, 8, 9, 10, 10]
+[5, 6, 7, 8, 9, 10, 10, 20]
+[5, 15, 6, 7, 8, 9, 10, 10, 20]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 요소 제거</span>
+<span class="c1"># .remove(x) =&gt; 기존 요소 x를 제거 (단, x가 여러 개면 맨 앞 하나만 지워지고, 없으면 오류 발생)</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+
+<span class="c1"># .pop() =&gt; 맨 마지막 요소를 출력하면서 그 요소를 삭제 (stack 구조)</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[5, 15, 6, 7, 8, 9, 10, 20]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 위치 찾기</span>
+<span class="c1"># .index(x) =&gt; x의 위치를 반환 (단, x가 여러 개면 맨 앞 인덱스를 반환하고, 없으면 오류 발생)</span>
+<span class="n">list1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="튜플-관련-함수">
+<a class="anchor" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>튜플 관련 함수<a class="anchor-link" href="#%ED%8A%9C%ED%94%8C-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"> </a>
+</h2>
+<ul>
+<li>소괄호를 쓰지 않아도 된다는 특징 덕분에 SWAP (값을 서로 변경), 함수의 가변인자 및 여러개의 출력을 받는데 많이 사용</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 소괄호 없이 튜플 만들기</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(1, 2, 3)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 원소가 하나인 튜플은 반드시 원소뒤에 쉼표 붙여서 표시</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'tuple'&gt;
+(1,)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 튜플을 이용한 여러 값 동시에 입력 받기 및 SWAP</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1 2
+2 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 함수의 가변인자로 사용</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">"입력된 데이터 타입 </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+	<span class="n">sum_x</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">product_x</span> <span class="o">=</span> <span class="mi">1</span>
+	<span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>  <span class="c1"># x는 튜플이므로 iterable =&gt; for문 사용가능</span>
+		<span class="n">sum_x</span> <span class="o">+=</span> <span class="n">val</span>
+		<span class="n">product_x</span> <span class="o">*=</span> <span class="n">val</span>
+	<span class="k">return</span> <span class="n">sum_x</span><span class="p">,</span> <span class="n">product_x</span>
+
+<span class="n">S</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>입력된 데이터 타입 &lt;class 'tuple'&gt;
+15 120
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="사전">
+<a class="anchor" href="#%EC%82%AC%EC%A0%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>사전<a class="anchor-link" href="#%EC%82%AC%EC%A0%84"> </a>
+</h1>
+<ul>
+<li>사전(dictionary)이란 key와 value 쌍으로 이루어진 hash table</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="사전-관련-함수">
+<a class="anchor" href="#%EC%82%AC%EC%A0%84-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>사전 관련 함수<a class="anchor-link" href="#%EC%82%AC%EC%A0%84-%EA%B4%80%EB%A0%A8-%ED%95%A8%EC%88%98"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 요소 확인하는 함수 - 값을 효율적으로 순회하거나 변경할 때 사용</span>
+
+<span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">25</span><span class="p">}</span>
+
+<span class="c1"># .keys() =&gt; 키 리스트 받기</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="c1"># .values() =&gt; 값 리스트 받기</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+<span class="c1"># .items() =&gt; 키와 값 쌍으로 얻기</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dict_keys([1, 2, 3, 4, 5])
+[1, 2, 3, 4, 5]
+dict_values([1, 4, 9, 16, 25])
+[1, 4, 9, 16, 25]
+dict_items([(1, 1), (2, 4), (3, 9), (4, 16), (5, 25)])
+[(1, 1), (2, 4), (3, 9), (4, 16), (5, 25)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="반복문과-comprehension">
+<a class="anchor" href="#%EB%B0%98%EB%B3%B5%EB%AC%B8%EA%B3%BC-comprehension" aria-hidden="true"><span class="octicon octicon-link"></span></a>반복문과 comprehension<a class="anchor-link" href="#%EB%B0%98%EB%B3%B5%EB%AC%B8%EA%B3%BC-comprehension"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="대표적인-이터레이터-객체-생성-함수-:-itertools-모듈-함수">
+<a class="anchor" href="#%EB%8C%80%ED%91%9C%EC%A0%81%EC%9D%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%ED%84%B0-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98-:-itertools-%EB%AA%A8%EB%93%88-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>대표적인 이터레이터 객체 생성 함수 : itertools 모듈 함수<a class="anchor-link" href="#%EB%8C%80%ED%91%9C%EC%A0%81%EC%9D%B8-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%ED%84%B0-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98-:-itertools-%EB%AA%A8%EB%93%88-%ED%95%A8%EC%88%98"> </a>
+</h2>
+<ul>
+<li>itertools 모듈은 다양한 종류의 이터레이터 객체를 생성하는 함수로 구성됨</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="c1">## itertools.product(*L)</span>
+<span class="c1"># 순회가능한 여러 개의 객체를 순서대로 순회하는 이터레이터를 생성 (**다중 for문과 같다**)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0 0 0
+0 0 1
+0 1 0
+0 1 1
+1 0 0
+1 0 1
+1 1 0
+1 1 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## itertools.combination(p,r)</span>
+<span class="c1"># 이터레이터 객체 p 에서 크기 r의 가능한 모든 *조합*을 갖는 이터레이터를 생성</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">comb</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>('a', 'b')
+('a', 'c')
+('a', 'd')
+('b', 'c')
+('b', 'd')
+('c', 'd')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># L에서 가능한 모든 조합 뽑기</span>
+
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">comb</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>('a',)
+('b',)
+('c',)
+('d',)
+('a', 'b')
+('a', 'c')
+('a', 'd')
+('b', 'c')
+('b', 'd')
+('c', 'd')
+('a', 'b', 'c')
+('a', 'b', 'd')
+('a', 'c', 'd')
+('b', 'c', 'd')
+('a', 'b', 'c', 'd')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## itertools.permutations(p,r)</span>
+<span class="c1"># 이터레이터 객체 p 에서 크기 r의 가능한 모든 *순열*을 갖는 이터레이터를 생성</span>
+
+<span class="k">for</span> <span class="n">per</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">per</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>('a', 'b')
+('a', 'c')
+('a', 'd')
+('b', 'a')
+('b', 'c')
+('b', 'd')
+('c', 'a')
+('c', 'b')
+('c', 'd')
+('d', 'a')
+('d', 'b')
+('d', 'c')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Comprehension">
+<a class="anchor" href="#Comprehension" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comprehension<a class="anchor-link" href="#Comprehension"> </a>
+</h2>
+<p><strong><em>list comprehension</em></strong></p>
+<ul>
+<li>for문을 사용하여 한줄로 리스트 작성</li>
+<li>문법 : [output <strong>for</strong> element <strong>in</strong> iterator (<strong>if</strong> condition)]</li>
+</ul>
+<p><strong><em>dictionary comprehension</em></strong></p>
+<ul>
+<li>for문을 사용하여 한줄로 사전 작성</li>
+<li>문법 : {~key~ : ~val~  <strong>for</strong> key, val <strong>in</strong> iterator (<strong>if</strong> condition)}</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 예시1 (dictionary comprehension)</span>
+
+<span class="n">dic1</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="k">2</span> == 0}
+<span class="nb">print</span><span class="p">(</span><span class="n">dic1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 풀어쓰면 아래와 같다</span>
+<span class="n">dic2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)):</span>
+	<span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="k">2</span> == 0:
+		<span class="n">dic2</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dic2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 예시2 (dictionary comprehension)</span>
+<span class="n">dic_ex1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span> <span class="p">:</span> <span class="s1">'NaN'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="s1">'NaN'</span><span class="p">}</span>
+<span class="n">dic_ex2</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">dic_ex1</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">y</span> <span class="o">!=</span> <span class="s1">'NaN'</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">dic_ex1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dic_ex2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{1: 'NaN', 2: 2, 3: 4, 4: 'NaN'}
+{2: 2, 3: 4}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="Numpy의-데이터-구조">
+<a class="anchor" href="#Numpy%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numpy의 데이터 구조<a class="anchor-link" href="#Numpy%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="Pandas의-데이터-구조">
+<a class="anchor" href="#Pandas%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas의 데이터 구조<a class="anchor-link" href="#Pandas%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0"> </a>
+</h1>
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20pre-processing/2021/11/11/ML-preprocessing1-2.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

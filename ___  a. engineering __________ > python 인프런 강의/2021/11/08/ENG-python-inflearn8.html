@@ -102,7 +102,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -477,6 +477,224 @@ inner &gt;&gt; [10, 30, 50, 10] / 4
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#53364;&#47196;&#51200;-&#49324;&#50857;-&#50696;&#51228;">&#53364;&#47196;&#51200; &#49324;&#50857; &#50696;&#51228;<a class="anchor-link" href="#&#53364;&#47196;&#51200;-&#49324;&#50857;-&#50696;&#51228;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">closure_ex1</span><span class="p">():</span>
+	<span class="c1"># 클로저 영역</span>
+	<span class="n">series</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Free variable (자유변수)</span>
+	<span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+		<span class="n">series</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inner &gt;&gt;&gt; </span><span class="si">{}</span><span class="s1"> / </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)))</span>
+		<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">series</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">average</span>
+
+<span class="n">avg_closure1</span> <span class="o">=</span> <span class="n">closure_ex1</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure1</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure1</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure1</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>inner &gt;&gt;&gt; [10] / 1
+10.0
+inner &gt;&gt;&gt; [10, 30] / 2
+20.0
+inner &gt;&gt;&gt; [10, 30, 50] / 3
+30.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># function inspection</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">avg_closure1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">avg_closure1</span><span class="o">.</span><span class="vm">__code__</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure1</span><span class="o">.</span><span class="vm">__code__</span><span class="o">.</span><span class="n">co_freevars</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure1</span><span class="o">.</span><span class="vm">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;__annotations__&#39;, &#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;, &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__kwdefaults__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__name__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__qualname__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;]
+
+[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;co_argcount&#39;, &#39;co_cellvars&#39;, &#39;co_code&#39;, &#39;co_consts&#39;, &#39;co_filename&#39;, &#39;co_firstlineno&#39;, &#39;co_flags&#39;, &#39;co_freevars&#39;, &#39;co_kwonlyargcount&#39;, &#39;co_lnotab&#39;, &#39;co_name&#39;, &#39;co_names&#39;, &#39;co_nlocals&#39;, &#39;co_stacksize&#39;, &#39;co_varnames&#39;]
+
+(&#39;series&#39;,)
+[10, 30, 50]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#51096;&#47803;&#46108;-&#53364;&#47196;&#51200;-&#49324;&#50857;">&#51096;&#47803;&#46108; &#53364;&#47196;&#51200; &#49324;&#50857;<a class="anchor-link" href="#&#51096;&#47803;&#46108;-&#53364;&#47196;&#51200;-&#49324;&#50857;"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 잘못된 사용</span>
+<span class="k">def</span> <span class="nf">closure_ex2</span><span class="p">():</span>
+	<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">def</span> <span class="nf">averager</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+		<span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="n">total</span> <span class="o">+=</span> <span class="n">v</span>
+		<span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">cnt</span>
+	<span class="k">return</span> <span class="n">averager</span>
+
+<span class="n">avg_closure2</span> <span class="o">=</span> <span class="n">closure_ex2</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure2</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">UnboundLocalError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-3e17304e2e63&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     11</span> 
+<span class="ansi-green-intense-fg ansi-bold">     12</span> avg_closure2 <span class="ansi-blue-fg">=</span> closure_ex2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 13</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>avg_closure2<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-7-3e17304e2e63&gt;</span> in <span class="ansi-cyan-fg">averager</span><span class="ansi-blue-fg">(v)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>         total <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">0</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span>         <span class="ansi-green-fg">def</span> averager<span class="ansi-blue-fg">(</span>v<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg">                 </span>cnt <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span>                 total <span class="ansi-blue-fg">+=</span> v
+<span class="ansi-green-intense-fg ansi-bold">      9</span>                 <span class="ansi-green-fg">return</span> total <span class="ansi-blue-fg">/</span> cnt
+
+<span class="ansi-red-fg">UnboundLocalError</span>: local variable &#39;cnt&#39; referenced before assignment</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 개선</span>
+<span class="k">def</span> <span class="nf">closure_ex3</span><span class="p">():</span>
+	<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">def</span> <span class="nf">averager</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+		<span class="k">nonlocal</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">total</span>
+		<span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="n">total</span> <span class="o">+=</span> <span class="n">v</span>
+		<span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">cnt</span>
+	<span class="k">return</span> <span class="n">averager</span>
+
+<span class="n">avg_closure3</span> <span class="o">=</span> <span class="n">closure_ex3</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure3</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure3</span><span class="p">(</span><span class="mi">35</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg_closure3</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>15.0
+25.0
+30.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h2 id="&#53364;&#47196;&#51200;-&#51221;&#47532;">&#53364;&#47196;&#51200; &#51221;&#47532;<a class="anchor-link" href="#&#53364;&#47196;&#51200;-&#51221;&#47532;"> </a></h2><ul>
+<li>외부에서 호출된 함수의 변수값, 상태(레퍼런스) 복사 후 저장 -&gt; 후에 접근(액세스) 가능</li>
+</ul>
+
+</div>
+</div>
+</div>
 </div>
 
 
