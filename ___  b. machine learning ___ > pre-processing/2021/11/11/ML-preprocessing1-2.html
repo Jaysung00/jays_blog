@@ -102,7 +102,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      7 min read
     
 </span></p>
 
@@ -137,7 +137,17 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Comprehension">Comprehension </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#Numpy의-데이터-구조">Numpy의 데이터 구조 </a></li>
+<li class="toc-entry toc-h1"><a href="#Numpy의-데이터-구조">Numpy의 데이터 구조 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#리스트와-ndarray의-비교">리스트와 ndarray의 비교 </a></li>
+<li class="toc-entry toc-h2"><a href="#사용방법">사용방법 </a></li>
+<li class="toc-entry toc-h2"><a href="#다양한-함수">다양한 함수 </a></li>
+<li class="toc-entry toc-h2"><a href="#인덱싱과-슬라이싱">인덱싱과 슬라이싱 </a></li>
+<li class="toc-entry toc-h2"><a href="#유니버셜-함수">유니버셜 함수 </a></li>
+<li class="toc-entry toc-h2"><a href="#브로드캐스팅">브로드캐스팅 </a></li>
+<li class="toc-entry toc-h2"><a href="#비교-연산자">비교 연산자 </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#Pandas의-데이터-구조">Pandas의 데이터 구조 </a></li>
 </ul><!--
 #################################################
@@ -884,9 +894,573 @@ dict_items([(1, 1), (2, 4), (3, 9), (4, 16), (5, 25)])
 <h1 id="Numpy의-데이터-구조">
 <a class="anchor" href="#Numpy%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numpy의 데이터 구조<a class="anchor-link" href="#Numpy%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0"> </a>
 </h1>
+<ul>
+<li>Numpy의 자료형은 <strong>ndarray</strong> ; 배열연산에 특화</li>
+<li>리스트와 ndarray는 유연성과 효율성을 기준으로 비교할 수 있다.</li>
+</ul>
+
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="리스트와-ndarray의-비교">
+<a class="anchor" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-ndarray%EC%9D%98-%EB%B9%84%EA%B5%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>리스트와 ndarray의 비교<a class="anchor-link" href="#%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%99%80-ndarray%EC%9D%98-%EB%B9%84%EA%B5%90"> </a>
+</h3>
+<p><em>리스트</em></p>
+<ul>
+<li>유연성이 높고 효율성이 떨어짐</li>
+<li>서로 다른 데이터 타입의 요소를 담을 수 있으나, 각 요소 정보를 따로 저장하므로 반복문 사용이 필수적</li>
+</ul>
+<p><em>ndarray</em></p>
+<ul>
+<li>유연성이 낮고 효율성이높음</li>
+<li>서로 다른 데이터 타입의 요소를 담을 수 없으나, 모든 요소 정보를 한번에 저장하므로 C로 구현된 내부 반복문을 사용하여 속도가 매우 빠르다</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="사용방법">
+<a class="anchor" href="#%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>사용방법<a class="anchor-link" href="#%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># np.array([...]) =&gt; ndarray의 작성</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># 모든 자료형이 같아야 하므로, 모두 float으로 설정됨</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1 3 2 5 3]
+[3.14 4.   2.   3.  ]
+[1. 2. 3. 4.]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span>
+<span class="c1"># array([..])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([1, 3, 2, 5, 3])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="다양한-함수">
+<a class="anchor" href="#%EB%8B%A4%EC%96%91%ED%95%9C-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>다양한 함수<a class="anchor-link" href="#%EB%8B%A4%EC%96%91%ED%95%9C-%ED%95%A8%EC%88%98"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># np.zeros(shape) =&gt; shape(튜플) 모양을 갖는 영벡터/영행렬 생성</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0., 0.],
+       [0., 0.],
+       [0., 0.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># np.arange([start,] stop [, step]) =&gt; start부터 stop까지 step만큼 건너뛴 ndarray반환</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([1. , 1.2, 1.4, 1.6, 1.8, 2. , 2.2, 2.4, 2.6, 2.8, 3. , 3.2, 3.4,
+       3.6, 3.8, 4. , 4.2, 4.4, 4.6, 4.8])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># np.linspace(start, stop, num) =&gt; start부터 stop까지 num개수의 요소를 가지는 등간격의 1차원 배열 반환</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0.   , 0.125, 0.25 , 0.375, 0.5  , 0.625, 0.75 , 0.875, 1.   ])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="인덱싱과-슬라이싱">
+<a class="anchor" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>인덱싱과 슬라이싱<a class="anchor-link" href="#%EC%9D%B8%EB%8D%B1%EC%8B%B1%EA%B3%BC-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8B%B1"> </a>
+</h2>
+<ul>
+<li>기본적인 인덱싱과 슬라이싱은 리스트와 완전 동일</li>
+<li>2차원 배열의 경우, X[i, j]는 i행j열의 요소를 나타냄 (리스트의 경우 X[i][j])</li>
+<li>Bool리스트나, 여러개의 인덱스를 리스트 형태로 입력받을 수도 있다.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 기본적인 인덱싱과 슬라이싱</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x1[0,1]:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x1[1:4, 2]:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">x1</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x1[0, 2:4]:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>x1[0,1]:
+ 0.991458380474886
+x1[1:4, 2]:
+ [0.28552211 0.72780905 0.64592508]
+x1[0, 2:4]:
+ [0.1724539  0.87906146]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="유니버셜-함수">
+<a class="anchor" href="#%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>유니버셜 함수<a class="anchor-link" href="#%EC%9C%A0%EB%8B%88%EB%B2%84%EC%85%9C-%ED%95%A8%EC%88%98"> </a>
+</h2>
+<ul>
+<li>유니버셜 함수는 ndarray의 개별요소에 반복된 연산을 빠르게 수행하는 것을 주 목적으로 하는 함수</li>
+<li>유니버셜 함수는 단순 반복문에 비해 매우 빠름</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x + y = "</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x - y = "</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x * y = "</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"x / y = "</span><span class="p">,</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"log x = "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>x + y =  [5 5 5 5]
+x - y =  [-3 -1  1  3]
+x * y =  [4 6 6 4]
+x / y =  [0.25       0.66666667 1.5        4.        ]
+log x =  [0.         0.69314718 1.09861229 1.38629436]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># loop와 유니버셜 함수의 속도 비교</span>
+<span class="n">arr_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">arr_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">val1</span><span class="p">,</span> <span class="n">val2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">arr_1</span><span class="p">,</span> <span class="n">arr_2</span><span class="p">):</span>
+	<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val1</span> <span class="o">+</span> <span class="n">val2</span><span class="p">)</span> <span class="c1"># 반복문과 리스트를 사용해서 합계 구현</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"반복문을 사용한 경우 : "</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">arr_1</span> <span class="o">+</span> <span class="n">arr_2</span> <span class="c1"># 유니버셜 함수를 사용해서 구현</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"유니버셜 함수를 사용한 경우"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">"   --&gt; 압도적으로 빠르다"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>반복문을 사용한 경우 :  65.5616
+유니버셜 함수를 사용한 경우 9.3789    --&gt; 압도적으로 빠르다
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="브로드캐스팅">
+<a class="anchor" href="#%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%BA%90%EC%8A%A4%ED%8C%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>브로드캐스팅<a class="anchor-link" href="#%EB%B8%8C%EB%A1%9C%EB%93%9C%EC%BA%90%EC%8A%A4%ED%8C%85"> </a>
+</h2>
+<ul>
+<li>다른 크기의 배열에 유니버셜 함수를 적용하는 규칙 집합으로, 큰 차원의 배열에 맞게 작은 배열이 확장됨</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[5 6 7]
+
+[[1. 2. 3.]
+ [1. 2. 3.]
+ [1. 2. 3.]]
+
+[[0 1 2]
+ [1 2 3]
+ [2 3 4]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 브로드캐스팅 다른 예시 z ~ normalization</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">Xmean</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># 열별 평균 -&gt; shape : (1,3)</span>
+<span class="n">Xstd</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># 열별 표준편차 -&gt; shape : (1,3)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span><span class="n">Xmean</span><span class="p">)</span> <span class="o">/</span> <span class="n">Xstd</span>  <span class="c1">## 브로드캐스팅을 통해 shape이 맞지 않더라도 복제되어 연산된다.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"X:"</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Xmean:</span><span class="se">\n</span><span class="s2">:"</span><span class="p">,</span> <span class="n">Xmean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Xstd:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Xstd</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Z:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>X: [[0.34526374 0.0068874  0.0648696 ]
+ [0.02405672 0.33285715 0.77607038]
+ [0.53832713 0.03900782 0.76152028]
+ [0.53662339 0.87083756 0.05370867]
+ [0.32347594 0.35124106 0.78431537]
+ [0.9124582  0.76879527 0.57759713]
+ [0.36505003 0.57848753 0.78177599]
+ [0.14326022 0.06703938 0.40142469]
+ [0.3084953  0.95590363 0.97143739]
+ [0.45909972 0.94533755 0.7000227 ]]
+
+Xmean:
+: [0.39561104 0.49163943 0.58727422]
+
+Xstd:
+ [0.23008893 0.36257427 0.2991969 ]
+
+Z:
+ [[-0.21881668 -1.33697305 -1.74602282]
+ [-1.61482919 -0.43793037  0.63100974]
+ [ 0.62026493 -1.24838316  0.58237922]
+ [ 0.6128602   1.0458495  -1.78332578]
+ [-0.31350963 -0.38722653  0.6585668 ]
+ [ 2.24629301  0.76441119 -0.03234354]
+ [-0.13282261  0.23953189  0.65007949]
+ [-1.09675342 -1.17107056 -0.62116127]
+ [-0.37861768  1.28046648  1.28398109]
+ [ 0.27593107  1.25132462  0.37683707]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="비교-연산자">
+<a class="anchor" href="#%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0%EC%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>비교 연산자<a class="anchor-link" href="#%EB%B9%84%EA%B5%90-%EC%97%B0%EC%82%B0%EC%9E%90"> </a>
+</h2>
+<ul>
+<li>비교 연산자의 결과는 항상 Bool 타입의 배열</li>
+<li>따라서 비교연산자의 결과를 바탕으로 조건에 맞는 요소 탐색에 활용가능</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="n">L</span><span class="o">&gt;=</span><span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">cond</span><span class="p">))</span> <span class="c1"># 조건을 만족하는 요소의 개수</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">cond</span><span class="p">])</span> <span class="c1"># 조건을 만족하는 요소만 반환</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3
+[3 4 5]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
