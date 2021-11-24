@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>적률생성함수(Moment Generating Function), 확률생성함수(Probability Generating Function) | Jay Sung’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="적률생성함수(Moment Generating Function), 확률생성함수(Probability Generating Function)" />
+<meta name="author" content="Jay Sung" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A study record about Data Science" />
+<meta property="og:description" content="A study record about Data Science" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/11/16/STT1.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/11/16/STT1.html" />
+<meta property="og:site_name" content="Jay Sung’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-16T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/11/16/STT1.html","@type":"BlogPosting","headline":"적률생성함수(Moment Generating Function), 확률생성함수(Probability Generating Function)","dateModified":"2021-11-16T00:00:00-06:00","datePublished":"2021-11-16T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/11/16/STT1.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','pub-3394438931488678','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/jays_blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/jays_blog/">Jay Sung&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/jays_blog/about/">About Me</a><a class="page-link" href="/jays_blog/search/">Search</a><a class="page-link" href="/jays_blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">적률생성함수(Moment Generating Function), 확률생성함수(Probability Generating Function)</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-16T00:00:00-06:00" itemprop="datePublished">
+        Nov 16, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/jays_blog/categories/#___  E. STATISTICS _____________ > 統計検定 準1級 개념정리">___  E. STATISTICS _____________ > 統計検定 準1級 개념정리</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#적률(moment)-&-중심적률-&-표준화적률">적률(moment) &amp; 중심적률 &amp; 표준화적률 </a></li>
+<li class="toc-entry toc-h1"><a href="#생성-함수(모함수)란?">생성 함수(모함수)란? </a></li>
+<li class="toc-entry toc-h1"><a href="#적률생섬함수-(MGF;-moment-generating-function)">적률생섬함수 (MGF; moment generating function) </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#적률생섬함수의-정의">적률생섬함수의 정의 </a></li>
+<li class="toc-entry toc-h2"><a href="#적률생섬함수가-적률을-생성하는-원리">적률생섬함수가 적률을 생성하는 원리 </a></li>
+<li class="toc-entry toc-h2"><a href="#(예)-이항확률변수-$X-\sim-B(n,p)$의-적률생성함수와-그-활용">(예) 이항확률변수 $X \sim B(n,p)$의 적률생성함수와 그 활용 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#확률생성함수-(Probability-generating-function)">확률생성함수 (Probability generating function) </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-16-STT1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th>대분류</th>
+<th>소분류</th>
+<th>학습내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>확률과 확률변수</td>
+<td>확률분포와 모함수</td>
+<td>적률모함수, 확률모함수</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="적률(moment)-&amp;-중심적률-&amp;-표준화적률">
+<a class="anchor" href="#%EC%A0%81%EB%A5%A0(moment)-&amp;-%EC%A4%91%EC%8B%AC%EC%A0%81%EB%A5%A0-&amp;-%ED%91%9C%EC%A4%80%ED%99%94%EC%A0%81%EB%A5%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>적률(moment) &amp; 중심적률 &amp; 표준화적률<a class="anchor-link" href="#%EC%A0%81%EB%A5%A0(moment)-&amp;-%EC%A4%91%EC%8B%AC%EC%A0%81%EB%A5%A0-&amp;-%ED%91%9C%EC%A4%80%ED%99%94%EC%A0%81%EB%A5%A0"> </a>
+</h1>
+<p><strong><em>[수학적 관점]</em></strong></p>
+<p>상수 c에 대한 x의 n차 적률은
+
+$$\mu_n = \int_{-\infty}^{\infty}(x-c)^nf(x)dx$$
+
+로 정의된다.</p>
+<p>$\space$</p>
+<p><strong><em>[통계적 관점]</em></strong></p>
+<p>확률변수 $X$ 에 대해 $X^r$ 에 대한 기댓값
+
+$$\mu_r' = E[X^r]$$
+</p>
+<p><em>(discrete random variable 일 때)</em> $$\mu_r' = E[X^r] = \sum\limits_xX^r\cdot f(x)$$
+<em>(continuous random variable 일 때)</em> $$\mu_r' = E[X^r] = \int_{-\infty}^{\infty}X^r\cdot f(x)dx$$
+을 <strong>r차 적률</strong> ($r^{th} \space moment$)이라고 하며, 평균 중심으로 적률을 구한 것을</p>
+<p>
+$$\mu_r = E[(X-\mu)^r]$$
+
+을 평균 $\mu = E(x)$에 대한 <strong>$X$의 r차 중심적률</strong>($r^{th} \space central \space moment$)이라 정의한다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>r차 중심적률을 표준편차의 r제곱으로 나눈 <strong>$X$의 r차 표준화적률</strong>을 아래와 같이 정의할 수 있다.
+
+$$\tilde{\mu}_n = \cfrac{\mu_n}{\sigma^n} = \cfrac{E[(x-\mu)^n]}{\sigma^n} = E[(\cfrac{x-\mu}{\sigma})^n]$$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th>이름</th>
+<th style="text-align:center">기호</th>
+<th style="text-align:center">정의</th>
+<th style="text-align:center">기댓값 형태</th>
+<th style="text-align:center">통계량과의 관계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>적률</td>
+<td style="text-align:center">$\mu_n'$</td>
+<td style="text-align:center">$\int_{-\infty}^{\infty}x^nf(x)dx$</td>
+<td style="text-align:center">$E[X^n]$</td>
+<td style="text-align:center">평균 = $\mu_1'$</td>
+</tr>
+<tr>
+<td>중심적률</td>
+<td style="text-align:center">$\mu_n$</td>
+<td style="text-align:center">$\int_{-\infty}^{\infty}(x-\mu)^nf(x)dx$</td>
+<td style="text-align:center">$E[(X - \mu)^n]$</td>
+<td style="text-align:center">분산 = $\mu_2$</td>
+</tr>
+<tr>
+<td>표준화적률</td>
+<td style="text-align:center">$\tilde{\mu}_n$</td>
+<td style="text-align:center">$\cfrac{\mu_n}{\sigma^n}$</td>
+<td style="text-align:center">$E[(\cfrac{X-\mu}{\sigma})^n]$</td>
+<td style="text-align:center">왜도 = $\tilde{\mu}_3$ 첨도 = $\tilde{\mu}_4$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="생성-함수(모함수)란?">
+<a class="anchor" href="#%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98(%EB%AA%A8%ED%95%A8%EC%88%98)%EB%9E%80?" aria-hidden="true"><span class="octicon octicon-link"></span></a>생성 함수(모함수)란?<a class="anchor-link" href="#%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98(%EB%AA%A8%ED%95%A8%EC%88%98)%EB%9E%80?"> </a>
+</h1>
+<p>수학에서 어떤 수열 $a_n$ (n은 자연수)에 대하여,
+
+$$f(x) = a_0 + a_1x + a_2x^2 + \dots + a_nx^n + \dots = \sum\limits^{\infty}_{k=0}a_kx^k$$
+
+와 같이 미지수의 계수가 수열의 각 항으로 되어 있는 멱급수 형태의 함수를 <strong>생성함수</strong> (generating function)라고 한다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="적률생섬함수-(MGF;-moment-generating-function)">
+<a class="anchor" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98-(MGF;-moment-generating-function)" aria-hidden="true"><span class="octicon octicon-link"></span></a>적률생섬함수 (MGF; moment generating function)<a class="anchor-link" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98-(MGF;-moment-generating-function)"> </a>
+</h1>
+<p>적률생섬함수는 위에서 배운 세가지 적률</p>
+<ul>
+<li>적률</li>
+<li>중심적률</li>
+<li>표준화적률</li>
+</ul>
+<p>중 첫번째 '적률' (원점에 대한 적률)을 생성한다. 물론 적률은 적분을 통해 구할 수 있지만,</p>
+<p><strong>적률생성함수를 한 번 구해놓으면 n차 적률을 아주 쉽게 구할 수 있다</strong>.</p>
+<p>$\space$</p>
+<h2 id="적률생섬함수의-정의">
+<a class="anchor" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98%EC%9D%98-%EC%A0%95%EC%9D%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>적률생섬함수의 정의<a class="anchor-link" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98%EC%9D%98-%EC%A0%95%EC%9D%98"> </a>
+</h2>
+<p>확률변수 $X$가 있을 때, $e^{tX}$의 기댓값이 적률생섬함수가 된다. 즉,
+
+$$M_X(t) = E[e^{tX}]$$
+
+를 확률 변수 X의 적률생성함수 라고 하고, 연속확률변수라면 아래와 같이 구할 수 있다.
+
+$$M_X(t) = E[e^{tX}] = \int_{-\infty}^{\infty}e^{tx}f(x)dx$$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="적률생섬함수가-적률을-생성하는-원리">
+<a class="anchor" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98%EA%B0%80-%EC%A0%81%EB%A5%A0%EC%9D%84-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EC%9B%90%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>적률생섬함수가 적률을 생성하는 원리<a class="anchor-link" href="#%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%AC%ED%95%A8%EC%88%98%EA%B0%80-%EC%A0%81%EB%A5%A0%EC%9D%84-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EC%9B%90%EB%A6%AC"> </a>
+</h2>
+<p>$e^{tX}$를 변수를 t로 생각하여 테일러 전개하면,</p>
+<p>
+$$e^{tX} = e^{aX} + \cfrac{Xe^{aX}}{1!}(t-a) + \cfrac{X^2e^{aX}}{2!}(t-a)^2 + \cfrac{X^3e^{aX}}{3!}(t-a)^3 + \dots$$
+</p>
+<p>a 에 0을 집어넣어, 매클로린 급수를 만들면
+
+$$e^{tX} = 1 + Xt + \cfrac{X^2}{2!}t^2 + \cfrac{X^3}{3!}t^3 + \dots $$
+</p>
+<p>가 되고, 이를 적률생성함수 식에 대입하면
+
+$$M_x(t) = E[e^{tX}] = E[1 + Xt + \cfrac{X^2}{2!}t^2 + \cfrac{X^3}{3!}t^3 + \dots]$$
+
+가 된다.</p>
+<p>이를 기대값 항을 분리해서 써주면
+$$
+\begin{aligned}
+M_x(t) = E[e^{tX}] &amp;= 1 + E[Xt] + E[\cfrac{X^2}{2!}t^2] + E[\cfrac{X^3}{3!}t^3] + \dots\\
+&amp;= 1 + E[X]t + \cfrac{E[X^2]}{2!}]t^2 + \cfrac{E[X^3]}{3!}t^3 + \dots\end{aligned}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><em>[1번 미분]</em></strong></p>
+<p>
+$$\cfrac{dM_X(t)}{dt} = E[X] + \cfrac{E[X^2]}{1!}]t + \cfrac{E[X^3]}{2!}t^2 + \dots$$
+</p>
+<p>t에 0을 넣으면,</p>
+<p>
+$$\cfrac{dM_X(t)}{dt} = E[X]$$
+</p>
+<p>1차 적률이 나온다. 즉, 적률생성함수를 한번 미분하고 t에 0을 넣으면 1차적률이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><em>[2번 미분]</em></strong></p>
+<p>
+$$\cfrac{d^2M_X(t)}{dt^2} = E[X^2] + \cfrac{E[X^3]}{1!}t + \dots$$
+</p>
+<p>t에 0을 넣으면,</p>
+<p>
+$$\cfrac{d^2M_X(t)}{dt^2} = E[X^2]$$
+</p>
+<p>2차 적률이 나온다. 즉, 적률생성함수를 두번 미분하고 t에 0을 넣으면 2차적률이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><em>[n번 미분]</em></strong></p>
+<p>n번 미분하고 t에 0을 넣으면,</p>
+<p>
+$$\cfrac{d^nM_X(t)}{dt^n} = E[X^n]$$
+</p>
+<p>n차 적률이 나온다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>이와 같은 성질은, 확률변수의 분포형태가 적률생성함수에 의하여 유일하게 결정됨을 보여준다. 이러한 사실은 분포의 형태가 적률에 의해 표현된다는 점으로 미루어 짐작 될 수 있다.</p>
+<p><strong>확률변수 X와 Y가 같은 적률생성함수를 가지면 두 확률변수는 같은 확률밀도함수를 가진다.</strong></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="(예)-이항확률변수-$X-\sim-B(n,p)$의-적률생성함수와-그-활용">
+<a class="anchor" href="#(%EC%98%88)-%EC%9D%B4%ED%95%AD%ED%99%95%EB%A5%A0%EB%B3%80%EC%88%98-%24X-%5Csim-B(n,p)%24%EC%9D%98-%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%B1%ED%95%A8%EC%88%98%EC%99%80-%EA%B7%B8-%ED%99%9C%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>(예) 이항확률변수 $X \sim B(n,p)$의 적률생성함수와 그 활용<a class="anchor-link" href="#(%EC%98%88)-%EC%9D%B4%ED%95%AD%ED%99%95%EB%A5%A0%EB%B3%80%EC%88%98-%24X-%5Csim-B(n,p)%24%EC%9D%98-%EC%A0%81%EB%A5%A0%EC%83%9D%EC%84%B1%ED%95%A8%EC%88%98%EC%99%80-%EA%B7%B8-%ED%99%9C%EC%9A%A9"> </a>
+</h2>$$
+\begin{aligned}M_X(t) = E(e^{tX}) &amp;= \sum\limits^n_{x=0}e^{tx}\binom{n}{x}p^x(1-p)^{n-x}\\
+&amp;= \sum\limits^n_{x=0}\binom{n}{x}(pe^t)^x(1-p)^{n-x}\\
+&amp;= (1-p+pe^t)^n \end{aligned}$$<p>그러므로, 이항확률변수 $X \sim B(n,p)$ 의 평균과 분산은 다음과 같이 계산된다. (단, p+q = 1)
+$$
+\begin{aligned}
+M_X^{(1)}(t) &amp;= n(q+pe^t)^{n-1}\cdot pe^t \\
+M_X^{(2)}(t) &amp;= n(q+pe^t)^{n-1}\cdot pe^t + pe^t\cdot n(n-1)(q+pe^t)^{n-2}pe^t \end{aligned}$$</p>
+<p>이고, t=0 을 대입하면,</p>
+$$
+\begin{aligned}
+M_X^{(1)}(0) &amp;= n(q+p)^{n-1}p \\
+&amp;= np\\
+&amp;= E(X)\\
+&amp; \space \\
+M_X^{(2)}(0) &amp;= n(q+p)^{n-1}p + pn(n-1)(q+p)^{n-2}p \\
+&amp;= np + p^2n(n-1)\\
+&amp;= E(X^2) \end{aligned}$$<p>이 된다. 그러므로,
+$$\begin{aligned}
+Var(X) &amp;= np + p^2n(n-1) - (np)^2\\
+&amp;= np - np^2\\
+&amp;= np(1-p)
+\end{aligned}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<hr>
+<h1 id="확률생성함수-(Probability-generating-function)">
+<a class="anchor" href="#%ED%99%95%EB%A5%A0%EC%83%9D%EC%84%B1%ED%95%A8%EC%88%98-(Probability-generating-function)" aria-hidden="true"><span class="octicon octicon-link"></span></a>확률생성함수 (Probability generating function)<a class="anchor-link" href="#%ED%99%95%EB%A5%A0%EC%83%9D%EC%84%B1%ED%95%A8%EC%88%98-(Probability-generating-function)"> </a>
+</h1>
+<p>이산형 확률변수 $X$가 음이 아닌 정수값 0,1,2,...를 가질 수 있을 때, 확률변수 $X$의 성질을 파악하는데 다음과 같이 정의 되는 확률생성함수를 이용할 수 있다. 편의상 $P(X = j) = p_j$로 표기한다.</p>
+<p>이산형 확률변수 $X$의 <strong>확률생성함수</strong>는 이하와 같이 정의된다.
+
+$$ G_X(s) = E(s^X) = \sum\limits^{\infty}_{j=0}p_js^j$$
+</p>
+<p>이와 같이 정의된 확률생성함수 $G_X(s)$는 $|s| \leq 1$ 에 대하여 다음과 같은 성질들을 가진다.</p>
+<p>(확률생성함수라는 이름의 유래는 아래의 성질3으로 부터 온것으로 여겨진다.)</p>
+<ol>
+<li>$E(X) = G_X'(1) = \left. \cfrac{d}{ds}G_X(s) \right|_{s=1}$</li>
+</ol>
+<p>$\space$</p>
+<ol>
+<li>서로 독립인 확률변수 X와 Y의 합인 Z = X + Y의 확률생성함수는
+$G_Z(s) = G_X(s)\cdot G_Y(s)$ 이다.</li>
+</ol>
+<p>$\space$</p>
+<ol>
+<li>$P(X=k) = \left. (1/k!)\cfrac{d^k}{ds^k}G_X(s) \right|_{s=0}$</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Jaysung00/jays_blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/11/16/STT1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jays_blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/jays_blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/jays_blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A study record about Data Science</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/jaysung00" title="jaysung00"><svg class="svg-icon grey"><use xlink:href="/jays_blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
