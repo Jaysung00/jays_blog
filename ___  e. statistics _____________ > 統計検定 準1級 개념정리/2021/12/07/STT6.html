@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Fastcampus ML 아카데미 - Ch02. 다중 선형회귀 분석 | Jay Sung’s Blog</title>
+<title>생존함수와 위험함수 | Jay Sung’s Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Fastcampus ML 아카데미 - Ch02. 다중 선형회귀 분석" />
+<meta property="og:title" content="생존함수와 위험함수" />
 <meta name="author" content="Jay Sung" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A study record about Data Science" />
 <meta property="og:description" content="A study record about Data Science" />
-<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20fastcampus%20%EA%B0%95%ED%95%84%EC%84%B1%20%EA%B0%95%EC%9D%98/2021/11/11/ML-fastcampus_MLacademy1.html" />
-<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20fastcampus%20%EA%B0%95%ED%95%84%EC%84%B1%20%EA%B0%95%EC%9D%98/2021/11/11/ML-fastcampus_MLacademy1.html" />
+<link rel="canonical" href="https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/12/07/STT6.html" />
+<meta property="og:url" content="https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/12/07/STT6.html" />
 <meta property="og:site_name" content="Jay Sung’s Blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-11-11T00:00:00-06:00" />
+<meta property="article:published_time" content="2021-12-07T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20fastcampus%20%EA%B0%95%ED%95%84%EC%84%B1%20%EA%B0%95%EC%9D%98/2021/11/11/ML-fastcampus_MLacademy1.html","@type":"BlogPosting","headline":"Fastcampus ML 아카데미 - Ch02. 다중 선형회귀 분석","dateModified":"2021-11-11T00:00:00-06:00","datePublished":"2021-11-11T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20fastcampus%20%EA%B0%95%ED%95%84%EC%84%B1%20%EA%B0%95%EC%9D%98/2021/11/11/ML-fastcampus_MLacademy1.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
+{"url":"https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/12/07/STT6.html","@type":"BlogPosting","headline":"생존함수와 위험함수","dateModified":"2021-12-07T00:00:00-06:00","datePublished":"2021-12-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jaysung00.github.io/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/12/07/STT6.html"},"author":{"@type":"Person","name":"Jay Sung"},"description":"A study record about Data Science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/jays_blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jaysung00.github.io/jays_blog/feed.xml" title="Jay Sung's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -94,8 +94,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Fastcampus ML 아카데미 - Ch02. 다중 선형회귀 분석</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-11T00:00:00-06:00" itemprop="datePublished">
-        Nov 11, 2021
+    <h1 class="post-title p-name" itemprop="name headline">생존함수와 위험함수</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-07T00:00:00-06:00" itemprop="datePublished">
+        Dec 7, 2021
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">Jay Sung</span></span>
@@ -109,7 +109,7 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/jays_blog/categories/#___  B. MACHINE LEARNING ___ > Fastcampus 강필성 강의">___  B. MACHINE LEARNING ___ > Fastcampus 강필성 강의</a>
+        <a class="category-tags-link" href="/jays_blog/categories/#___  E. STATISTICS _____________ > 統計検定 準1級 개념정리">___  E. STATISTICS _____________ > 統計検定 準1級 개념정리</a>
         
       
       </p>
@@ -120,12 +120,14 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#Formulation-및-학습">Formulation 및 학습 </a></li>
+<li class="toc-entry toc-h1"><a href="#생존함수">생존함수 </a></li>
+<li class="toc-entry toc-h1"><a href="#위험-함수">위험 함수 </a></li>
+<li class="toc-entry toc-h1"><a href="#생존함수와-위험함수-사이의-관계">생존함수와 위험함수 사이의 관계 </a></li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2021-11-11-ML-fastcampus_MLacademy1.ipynb
+# file to edit: _notebooks/2021-12-07-STT6.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -135,9 +137,91 @@ window.onload = wrap_img;
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
 <hr>
-<h1 id="Formulation-및-학습">
-<a class="anchor" href="#Formulation-%EB%B0%8F-%ED%95%99%EC%8A%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formulation 및 학습<a class="anchor-link" href="#Formulation-%EB%B0%8F-%ED%95%99%EC%8A%B5"> </a>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead>
+<tr>
+<th>대분류</th>
+<th>소분류</th>
+<th>학습내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>확률과 확률변수</td>
+<td>확률분포와 모함수</td>
+<td>생존함수</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="생존함수">
+<a class="anchor" href="#%EC%83%9D%EC%A1%B4%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>생존함수<a class="anchor-link" href="#%EC%83%9D%EC%A1%B4%ED%95%A8%EC%88%98"> </a>
 </h1>
+<p>생존 함수(survival function 또는 suvivor function) S(t)는 생존 시간 T가 특정 시간 t 보다 클 확률을 가리킨다. T의 cdf를 F(t)라고 하면 다음 관계가 성립한다.</p>
+<p>
+$$S(t)=P(T&gt;t)=1−F(t)$$
+
+생존 함수 S(t)는 t 시점에서 살아있을 또는 t 시점까지 살아남을 확률이다. 이때 t 시점까지 살아남는다는 것은 t 시점까지만 살고 바로 그때 죽는다는 뜻이 아니다. t 시점 이후에 죽는다는 뜻이다. 더 일반적으로 말로 표현하면 t 시점까지 관심 사건이 일어나지 않을 확률이다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="위험-함수">
+<a class="anchor" href="#%EC%9C%84%ED%97%98-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>위험 함수<a class="anchor-link" href="#%EC%9C%84%ED%97%98-%ED%95%A8%EC%88%98"> </a>
+</h1>
+<p>위험 함수(hazard function) h(t)는 주어진 시간 t에서 단위 시간 당 사건 발생율이다.</p>
+<p>
+$$h(t)=lim_{\Delta t→0} \cfrac{P(t\leq T&lt;t+\Delta t\space|T\geq t)}{\Delta t}$$
+</p>
+<p>사건이 일어날 순간 가능성(instantaneous potential)이라고도 할 수 있다. 위험 함수를 조건부 실패율(conditional failure rate)라고도 한다.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h1 id="생존함수와-위험함수-사이의-관계">
+<a class="anchor" href="#%EC%83%9D%EC%A1%B4%ED%95%A8%EC%88%98%EC%99%80-%EC%9C%84%ED%97%98%ED%95%A8%EC%88%98-%EC%82%AC%EC%9D%B4%EC%9D%98-%EA%B4%80%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>생존함수와 위험함수 사이의 관계<a class="anchor-link" href="#%EC%83%9D%EC%A1%B4%ED%95%A8%EC%88%98%EC%99%80-%EC%9C%84%ED%97%98%ED%95%A8%EC%88%98-%EC%82%AC%EC%9D%B4%EC%9D%98-%EA%B4%80%EA%B3%84"> </a>
+</h1>
+<p>생존 함수 $S(t)=P(T&gt;t)$와 생존 시간 $T$의 cdf인 $F(t)$사이에는
+
+$$S(t)=1−F(t)$$
+
+관계가 성립하므로 양변을 $t$에 관해 미분하면
+
+$$\cfrac{d}{dt}S(t)=−f(t)$$
+
+와 같은 관계를 얻을 수 있다. 여기에서 $f(t)$는 $T$의 pdf이다.</p>
+<p>위험 함수 $h(t)$의 정의를 따라 식을 바꾸어 보면</p>
+$$\begin{aligned}
+h(t)
+&amp;=lim_{\Delta t→0} \cfrac {P(t\leq T&lt;t+ \Delta t|T\geq t)}{\Delta t}\\
+&amp;=lim_{\Delta t→0} \cfrac {P(t\leq T&lt;t+ \Delta t)}{P(T\geq t)} \cfrac{1} {\Delta t} \\
+&amp;=\cfrac{1}{P(T\geq t)} lim_{\Delta t→0} \cfrac {P(t\leq T&lt;t+ \Delta t)} {\Delta t} \\
+&amp;=\cfrac{1}{P(T\geq t)} f(t) \\
+&amp;=\cfrac{f(t)}{S(t)} \\
+&amp;=−\cfrac{d}{dt}lnS(t)
+\end{aligned}$$
 </div>
 </div>
 </div>
@@ -153,7 +237,7 @@ window.onload = wrap_img;
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/jays_blog/___%20%20b.%20machine%20learning%20___%20%3E%20fastcampus%20%EA%B0%95%ED%95%84%EC%84%B1%20%EA%B0%95%EC%9D%98/2021/11/11/ML-fastcampus_MLacademy1.html" hidden></a>
+</script><a class="u-url" href="/jays_blog/___%20%20e.%20statistics%20_____________%20%3E%20%E7%B5%B1%E8%A8%88%E6%A4%9C%E5%AE%9A%20%E6%BA%961%E7%B4%9A%20%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC/2021/12/07/STT6.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
